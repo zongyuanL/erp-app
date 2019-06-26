@@ -1,27 +1,30 @@
 package cn.alex.demosplit.servicelog.controller;
 
-
-import cn.alex.demosplit.servicelog.entity.Result;
-import cn.alex.demosplit.servicelog.enumeration.ResultCode;
+import cn.alex.demosplit.dsbasic.ConfigurationProperties;
+import cn.alex.demosplit.dsbasic.vo.Result;
+import cn.alex.demosplit.dsbasic.vo.factory.ResultFactory;
+import cn.alex.demosplit.dsbasic.web.HttpClientUtil;
 import cn.alex.demosplit.servicelog.service.MyUserDetailService;
+import cn.alex.demosplit.servicelog.vo.LogVo;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.provider.token.ConsumerTokenServices;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.security.Principal;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 〈会员Controller〉
  *
- * @author Curise
+ * @author Alex ZY Liang
  * @create 2018/12/13
  * @since 1.0.0
  */
 @RestController
-@RequestMapping("/api")
+//@RequestMapping("/api")
 public class MemberController {
 
     @Autowired
@@ -36,16 +39,33 @@ public class MemberController {
         return member;
     }
 
+
+    @PostMapping(value = "/appLogin")
+    @ResponseBody
+//    public Result authrize(String grant_type,String client_id,String client_secret,String username,String password,String redirect_uri) {
+//    public Result authrize(@RequestBody LogVo logVo) {
+    public Result authrize(@RequestBody Map o) {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return HttpClientUtil.sendPostDataByMap(
+                    ConfigurationProperties.authrizeURL,
+o,
+//                    objectMapper.convertValue(logVo, Map.class),
+                    "UTF-8");
+        } catch (IOException e) {
+            return ResultFactory.buildFailResult("无法连接认证服务器");
+        }
+    }
+
     @DeleteMapping(value = "/exit")
     public Result revokeToken(String access_token) {
         //注销当前用户
         Result result = new Result();
         if (consumerTokenServices.revokeToken(access_token)) {
-            result.setCode(ResultCode.SUCCESS.getCode());
-            result.setMessage("注销成功");
+            ResultFactory.buildSuccessResult("注销成功", null);
         } else {
-            result.setCode(ResultCode.FAILED.getCode());
-            result.setMessage("注销失败");
+            ResultFactory.buildFailResult("注销失败");
         }
         return result;
     }

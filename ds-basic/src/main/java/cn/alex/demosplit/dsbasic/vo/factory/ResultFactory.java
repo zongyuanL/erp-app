@@ -7,7 +7,11 @@ import cn.alex.demosplit.dsbasic.vo.Result;
 public class ResultFactory {
 
     public static Result buildSuccessResult(Object data) {
-        return buidResult(ResultCode.SUCCESS, "成功", data);
+        return buildSuccessResult(ResultCode.SUCCESS.name(), data);
+    }
+
+    public static Result buildSuccessResult(String message, Object data) {
+        return buidResult(ResultCode.SUCCESS, message, data);
     }
 
     public static Result buildFailResult(String message) {
