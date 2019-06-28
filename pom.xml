@@ -9,7 +9,7 @@
         <version>2.1.2.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>cn.alex.demo-split</groupId>
+    <groupId>com.alex.erp</groupId>
     <artifactId>ds-common</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>ds-common</name>
@@ -21,6 +21,7 @@
         <java.version>1.8</java.version>
         <spring-cloud.version>Greenwich.RELEASE</spring-cloud.version>
         <eureka-client.version>1.4.6.RELEASE</eureka-client.version>
+        <oauth2.version>2.2.1.RELEASE</oauth2.version>
     </properties>
     <modules>
         <module>eureka-server</module>
@@ -29,6 +30,8 @@
         <module>sc-gateway</module>
         <module>ds-basic</module>
         <module>DBUtil</module>
+        <module>service-business</module>
+        <module>configServer</module>
     </modules>
 
     <dependencies>

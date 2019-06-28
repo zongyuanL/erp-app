@@ -1,0 +1,93 @@
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  profiles:
+    include: basicConfig.yml
+
+#  profiles:
+#    active: dev
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          # 服务名小写
+          lower-case-service-id: true
+      routes:
+      - id: authorization
+        # lb代表从注册中心获取服务，且已负载均衡方式转发
+        uri: lb://authorization
+        predicates:
+        - Path=/auth/**
+        # 加上StripPrefix=1，否则转发到后端服务时会带上consumer前缀
+        filters:
+        - StripPrefix=1
+      - id: service-um
+        uri: lb://service-um
+        predicates:
+        - Path=/user/**
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "GET,POST,DELETE"
+            allowedheaders: "*"
+            allow-credentials: true
+  zipkin:
+    base-url: http://localhost:9411
+    sender:
+      type: web
+    locator:
+      discovery:
+        enabled: true
+    enabled: true
+  sleuth:
+    sampler:
+      percentage: 1.0
+# 注册中心
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+
+# 暴露监控端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+
+filters:
+# 熔断降级配置
+- name: Hystrix
+  args:
+    name : default
+    fallbackUri: 'forward:/defaultfallback'
+
+# hystrix 信号量隔离，3秒后自动超时
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: SEMAPHORE
+          thread:
+            timeoutInMilliseconds: 3000
+  shareSecurityContext: true
+
+security:
+  oauth2:
+    client:
+      access-token-uri: http://localhost:${server.port}/auth/oauth/token
+      user-authorization-uri: http://localhost:${server.port}/auth/oauth/authorize
+      client-id: web
+    resource:
+      user-info-uri:  http://localhost:${server.port}/auth/api/member
+      prefer-token-info: false

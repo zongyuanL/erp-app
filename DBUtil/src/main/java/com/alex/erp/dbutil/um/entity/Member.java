@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * 〈会员实体〉
  *
- * @author Curise
+ * @author Alex ZY Liang
  * @create 2018/12/13
  * @since 1.0.0
  */

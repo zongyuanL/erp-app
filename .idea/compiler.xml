@@ -7,21 +7,25 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="authorizationServer" />
+        <module name="configServer" />
         <module name="DBUtil" />
         <module name="ds-basic" />
         <module name="eureka-server" />
         <module name="sc-gateway" />
+        <module name="service-business" />
         <module name="service-feign" />
         <module name="service-um" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="authorizationServer" target="1.8" />
+      <module name="configServer" target="1.8" />
       <module name="DBUtil" target="1.8" />
       <module name="ds-basic" target="1.8" />
       <module name="ds-common" target="1.8" />
       <module name="eureka-server" target="1.8" />
       <module name="sc-gateway" target="1.8" />
+      <module name="service-business" target="1.8" />
       <module name="service-feign" target="1.8" />
       <module name="service-um" target="1.8" />
     </bytecodeTargetLevel>

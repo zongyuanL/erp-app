@@ -4,10 +4,12 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/DBUtil/DBUtil.iml" filepath="$PROJECT_DIR$/DBUtil/DBUtil.iml" />
       <module fileurl="file://$PROJECT_DIR$/authorizationServer/authorizationServer.iml" filepath="$PROJECT_DIR$/authorizationServer/authorizationServer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/configServer/configServer.iml" filepath="$PROJECT_DIR$/configServer/configServer.iml" />
       <module fileurl="file://$PROJECT_DIR$/ds-basic/ds-basic.iml" filepath="$PROJECT_DIR$/ds-basic/ds-basic.iml" />
       <module fileurl="file://$PROJECT_DIR$/ds-common.iml" filepath="$PROJECT_DIR$/ds-common.iml" />
       <module fileurl="file://$PROJECT_DIR$/eureka-server/eureka-server.iml" filepath="$PROJECT_DIR$/eureka-server/eureka-server.iml" />
       <module fileurl="file://$PROJECT_DIR$/sc-gateway/sc-gateway.iml" filepath="$PROJECT_DIR$/sc-gateway/sc-gateway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/service-business/service-business.iml" filepath="$PROJECT_DIR$/service-business/service-business.iml" />
       <module fileurl="file://$PROJECT_DIR$/service-feign/service-feign.iml" filepath="$PROJECT_DIR$/service-feign/service-feign.iml" />
       <module fileurl="file://$PROJECT_DIR$/service-um/service-um.iml" filepath="$PROJECT_DIR$/service-um/service-um.iml" />
     </modules>
