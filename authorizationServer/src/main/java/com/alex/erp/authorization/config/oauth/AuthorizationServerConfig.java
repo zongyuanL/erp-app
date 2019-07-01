@@ -2,7 +2,6 @@ package com.alex.erp.authorization.config.oauth;
 
 import com.alex.erp.authorization.service.MyUserDetailService;
 import com.alex.erp.authorization.config.error.MssWebResponseExceptionTranslator;
-import com.alex.erp.authorization.service.MyUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
