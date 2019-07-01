@@ -64,7 +64,6 @@
             <version>${swagger2-ui.version}</version>
         </dependency>
 
-
     </dependencies>
 
     <build>

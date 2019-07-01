@@ -1,4 +1,4 @@
-package cn.alex.demosplit.servicebusiness;
+package com.alex.erp.business;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

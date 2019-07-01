@@ -1,5 +1,6 @@
-package com.alex.erp.basic.auth;
+package com.alex.erp.basic.baseconfig.auth;
 
+import com.alex.erp.basic.dic.StaticParams;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 //@Configuration
 //@EnableResourceServer
-public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
+public class BasicResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Value("${auth.clientID}")
     private String clientID;
@@ -29,9 +30,6 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Bean
     public ResourceServerTokenServices tokenService() {
         RemoteTokenServices tokenServices = new RemoteTokenServices();
-//        tokenServices.setClientId("testclient");
-//        tokenServices.setClientSecret("123456");
-//        tokenServices.setCheckTokenEndpointUrl("http://localhost:9999/auth/oauth/check_token");
         tokenServices.setClientId(this.clientID);
         tokenServices.setClientSecret(this.clientSecret);
         tokenServices.setCheckTokenEndpointUrl(this.checkTokenEndpointUrl);
@@ -46,7 +44,10 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .authenticationEntryPoint((request, response, authException) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED))
                 .and()
                 .authorizeRequests()
-                .antMatchers("/error","/swagger","/swagger2","/**/*.html","/**/*.js", "/**/*.css","/swagger-resources/**","/webjars/**","/v2/**").permitAll()
+                .antMatchers(
+                        StaticParams.getIgnorePath()
+//                        "/error","/swagger","/swagger2","/**/*.html","/**/*.js", "/**/*.css","/swagger-resources/**","/webjars/**","/v2/**"
+                ).permitAll()
                 .and()
                 .authorizeRequests()
                 .anyRequest().authenticated()

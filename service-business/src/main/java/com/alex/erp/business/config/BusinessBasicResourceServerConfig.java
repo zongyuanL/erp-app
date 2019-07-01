@@ -1,11 +1,11 @@
-package cn.alex.demosplit.servicebusiness.config;
+package com.alex.erp.business.config;
 
-import com.alex.erp.basic.auth.ResourceServerConfig;
+import com.alex.erp.basic.baseconfig.auth.BasicResourceServerConfig;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 
 @Configuration
 @EnableResourceServer
-public class BusinessResourceServerConfig extends ResourceServerConfig {
+public class BusinessBasicResourceServerConfig extends BasicResourceServerConfig {
 
 }

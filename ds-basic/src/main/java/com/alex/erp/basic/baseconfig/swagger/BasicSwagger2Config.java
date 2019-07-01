@@ -1,4 +1,4 @@
-package cn.alex.demosplit.servicebusiness.config;
+package com.alex.erp.basic.baseconfig.swagger;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -22,9 +22,9 @@ import java.util.Collections;
  * @Author Alex ZY Liang
  * @Date 2019-07-01 11:45 AM
  */
-@Configuration
-@EnableSwagger2
-public class Swagger2Config {
+//@Configuration
+//@EnableSwagger2
+public class BasicSwagger2Config {
 
     @Value("${auth.server}")
     private String AUTH_SERVER;
@@ -35,7 +35,7 @@ public class Swagger2Config {
                 .apiInfo(apiInfo())
                 .select()
                 // 自行修改为自己的包路径
-                .apis(RequestHandlerSelectors.basePackage("cn.alex.demosplit.servicebusiness.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.alex.erp"))
                 .paths(PathSelectors.any()).build()
                 .securitySchemes(Collections.singletonList(securitySchema()))
                 .securityContexts(Collections.singletonList(securityContext()));

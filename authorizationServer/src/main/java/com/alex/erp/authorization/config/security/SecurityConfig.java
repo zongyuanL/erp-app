@@ -2,6 +2,7 @@ package com.alex.erp.authorization.config.security;
 
 
 import com.alex.erp.authorization.service.MyUserDetailService;
+import com.alex.erp.basic.dic.StaticParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,7 +41,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.requestMatchers()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/login","/login**","/appLogin","/oauth/**","/*.html").permitAll()
+                .antMatchers(
+                        StaticParams.getIgnorePath()
+//                        "/login","/login**","/appLogin","/oauth/**","/*.html"
+                ).permitAll()
                 .and()
                 .formLogin().permitAll()
                 .and()

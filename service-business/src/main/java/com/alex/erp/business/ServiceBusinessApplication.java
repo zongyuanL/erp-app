@@ -1,4 +1,4 @@
-package cn.alex.demosplit.servicebusiness;
+package com.alex.erp.business;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
