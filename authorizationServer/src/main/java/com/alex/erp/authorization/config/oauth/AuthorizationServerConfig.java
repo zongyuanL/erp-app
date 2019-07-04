@@ -113,7 +113,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .authenticationManager(authenticationManager);
         endpoints.tokenServices(defaultTokenServices());
         //认证异常翻译
-       // endpoints.exceptionTranslator(webResponseExceptionTranslator());
+        endpoints.exceptionTranslator(webResponseExceptionTranslator());
     }
 
     /**

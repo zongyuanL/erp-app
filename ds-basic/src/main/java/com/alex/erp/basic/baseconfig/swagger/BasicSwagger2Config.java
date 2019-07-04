@@ -47,9 +47,9 @@ public class BasicSwagger2Config {
                 .title("Alex swagger文档")
                 .description("Alex swagger文档")
                 //服务条款网址
-                .termsOfServiceUrl("http://baidu.com")
+               // .termsOfServiceUrl("http://baidu.com")
                 .version("1.0")
-                .contact(new Contact("Alex ZY Liang", "http://baidu.com", "1737271@qq.com"))
+               // .contact(new Contact("Alex ZY Liang", "http://baidu.com", "1737271@qq.com"))
                 .build();
     }
 

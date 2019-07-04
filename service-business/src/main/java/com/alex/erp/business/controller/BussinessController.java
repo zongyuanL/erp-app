@@ -7,6 +7,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -16,7 +17,6 @@ public class BussinessController {
 
 
     @ApiOperation(value="带权限登录",notes = "带权限登录", httpMethod = "POST")
-    @ApiImplicitParam(name="loginInfoVo",value="用户信息", required = true, dataType = "string")
     @GetMapping("/withright")
     @PreAuthorize("hasAuthority('query-demo')")
     public String getDemo(){
@@ -31,10 +31,12 @@ public class BussinessController {
         return "good with hello right";
     }
 
+    @ApiOperation(value="无权限测试接口",notes = "没有 hasAuthority 选项", httpMethod = "GET")
+    @ApiImplicitParam(name="username",value="用户名", required = false,defaultValue = "alex",dataType = "string")
     @GetMapping("/withoutright")
-    public String getDemo2(){
+    public String getDemo2(@RequestParam(value="username",defaultValue = "alex") String userName ){
 
         log.warn("runing buss without right");
-        return "good without right";
+        return "hi @"+userName+",that is good without right";
     }
 }
