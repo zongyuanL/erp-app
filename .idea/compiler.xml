@@ -15,6 +15,7 @@
         <module name="service-business" />
         <module name="service-feign" />
         <module name="service-um" />
+        <module name="workflow" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -28,6 +29,7 @@
       <module name="service-business" target="1.8" />
       <module name="service-feign" target="1.8" />
       <module name="service-um" target="1.8" />
+      <module name="workflow" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

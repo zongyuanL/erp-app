@@ -1,7 +1,6 @@
 package com.alex.erp.authorization.service;
 
 
-//import cn.alex.demosplit.servicelog.dao.MemberDao;
 import com.alex.erp.dbutil.um.dao.MemberDao;
 import com.alex.erp.dbutil.um.entity.Member;
 import com.alex.erp.dbutil.um.entity.Permission;
@@ -33,6 +32,7 @@ public class MyUserDetailService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String memberName) throws UsernameNotFoundException {
         Member member = memberDao.findByMemberName(memberName);
+//        EsMember member = memberService.getOne(Wrappers.<EsMember>lambdaQuery().eq(EsMember::getMemberName,memberName),false);
         if (member == null) {
             throw new UsernameNotFoundException(memberName);
         }

@@ -11,7 +11,7 @@ import java.util.List;
  * 〈角色Dao〉
  *
  */
-public interface RoleDao {
+public interface RoleDao  {
 
     /**
      * 根据用户id查找角色列表

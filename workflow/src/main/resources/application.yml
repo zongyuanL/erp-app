@@ -1,0 +1,47 @@
+#整合Activit
+server:
+  port: 8770
+  servlet:
+    context-path: /
+spring:
+  mvc:
+    static-path-pattern: /**
+  resources:
+    static-locations:
+      - classpath:/templates/**
+  application:
+    name: service-activiti
+  jpa:
+    database: MYSQL
+    hibernate:
+      ddl-auto: update
+    #整合JPA
+    show-sql: true
+  activiti:
+    check-process-definitions: false
+    database-schema-update: true
+    db-identity-used: false
+  datasource:
+    url: jdbc:mysql://localhost:3306/member?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&useSSL=false&nullCatalogMeansCurrent=true
+    username: root
+    password: sa123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    maxActive: 20
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    testWhileIdle: true
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://localhost:8761/eureka/
+#security:
+#  oauth2:
+#    resource:
+#      user-info-uri: http://localhost:8770
+#      token-info-uri: http://localhost:8771/oauth/check_token
+#    client:
+#      client-id: activitiServer
+#      client-secret: user123
+#      access-token-uri: http://localhost:8771/oauth/token
+#      user-authorization-uri: http://localhost:8771/oauth/authorize

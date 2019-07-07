@@ -7,7 +7,7 @@ import com.alex.erp.dbutil.um.entity.Member;
  * 〈用户Dao〉
  *
  */
-public interface MemberDao {
+public interface MemberDao  {
 
     /**
      * 根据会员名查找会员

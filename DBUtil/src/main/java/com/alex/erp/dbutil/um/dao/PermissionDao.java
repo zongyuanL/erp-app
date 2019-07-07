@@ -9,7 +9,7 @@ import java.util.List;
  * 〈权限Dao〉
  *
  */
-public interface PermissionDao {
+public interface PermissionDao  {
 
     /**
      * 根据角色id查找权限列表

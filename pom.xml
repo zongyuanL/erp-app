@@ -28,7 +28,11 @@
         <mybatis-plus.version>3.1.0</mybatis-plus.version>
         <druid.version>1.1.10</druid.version>
         <mybatis.version>1.3.2</mybatis.version>
+        <spring-tx.version>5.1.8.RELEASE</spring-tx.version>
         <velocity.version>2.1</velocity.version>
+
+        <activiti.version>5.22.0</activiti.version>
+        <batik.version>1.7</batik.version>
     </properties>
     <modules>
         <module>eureka-server</module>
@@ -39,6 +43,7 @@
         <module>DBUtil</module>
         <module>service-business</module>
         <module>configServer</module>
+        <module>workflow</module>
     </modules>
 
     <dependencies>
