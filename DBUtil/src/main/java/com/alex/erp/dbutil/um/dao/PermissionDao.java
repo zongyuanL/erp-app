@@ -2,6 +2,7 @@ package com.alex.erp.dbutil.um.dao;
 
 
 import com.alex.erp.dbutil.um.entity.Permission;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -16,5 +17,5 @@ public interface PermissionDao  {
      * @param roleId 角色id
      * @return 权限列表
      */
-    List<Permission> findByRoleId(Integer roleId);
+    List<Permission> findByRoleId(@Param("fid") Integer roleId);
 }

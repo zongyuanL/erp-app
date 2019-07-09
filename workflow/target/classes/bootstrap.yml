@@ -1,0 +1,18 @@
+#整合Activit
+server:
+  port: 8770
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: workflow
+  cloud:
+    config:
+      name: workflow,basicConfig  #文件前缀名称
+#      uri: http://localhost:8088
+      username: alex
+      password: 123456
+      discovery:
+        enabled: true
+        service-id: config-server

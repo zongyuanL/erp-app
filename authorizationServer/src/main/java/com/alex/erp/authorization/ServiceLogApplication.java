@@ -10,7 +10,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableFeignClients
 @EnableDiscoveryClient
 //@MapperScan("cn.alex.demosplit.servicelog.dao")
-@MapperScan("com.alex.erp.dbutil.um.dao")
+@MapperScan("com.alex.erp.dbutil.um.mapper")
 public class ServiceLogApplication {
 
     public static void main(String[] args) {

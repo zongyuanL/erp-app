@@ -2,9 +2,10 @@ package com.alex.erp.authorization.service;
 
 
 import com.alex.erp.dbutil.um.dao.MemberDao;
-import com.alex.erp.dbutil.um.entity.Member;
-import com.alex.erp.dbutil.um.entity.Permission;
-import com.alex.erp.dbutil.um.entity.Role;
+import com.alex.erp.dbutil.um.entity.*;
+import com.alex.erp.dbutil.um.mapper.EsMemberMapper;
+import com.alex.erp.dbutil.um.service.IEsMemberService;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -27,12 +28,17 @@ import java.util.Set;
 public class MyUserDetailService implements UserDetailsService {
 
     @Autowired
-    private MemberDao memberDao;
+    private IEsMemberService memberService;
+
+//    @Autowired
+//    private EsMemberMapper esMemberMapper;
 
     @Override
     public UserDetails loadUserByUsername(String memberName) throws UsernameNotFoundException {
-        Member member = memberDao.findByMemberName(memberName);
+//        Member member = memberDao.findByMemberName(memberName);
 //        EsMember member = memberService.getOne(Wrappers.<EsMember>lambdaQuery().eq(EsMember::getMemberName,memberName),false);
+
+        EsMember member =  memberService.findByMemberName(memberName);
         if (member == null) {
             throw new UsernameNotFoundException(memberName);
         }
@@ -45,12 +51,12 @@ public class MyUserDetailService implements UserDetailsService {
         boolean credentialsNonExpired = true;
         // 锁定性 :true:未锁定 false:已锁定
         boolean accountNonLocked = true;
-        for (Role role : member.getRoles()) {
+        for (EsRole role : member.getRoles()) {
             //角色必须是ROLE_开头，可以在数据库中设置
             GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(role.getRoleName());
             grantedAuthorities.add(grantedAuthority);
             //获取权限
-            for (Permission permission : role.getPermissions()) {
+            for (EsPermission permission : role.getPermissions()) {
                 GrantedAuthority authority = new SimpleGrantedAuthority(permission.getUri());
                 grantedAuthorities.add(authority);
             }
