@@ -7,7 +7,15 @@ import com.alex.erp.basic.vo.Result;
 public class ResultFactory {
 
     public static Result buildSuccessResult(Object data) {
-        return buildSuccessResult(ResultCode.SUCCESS.name(), data);
+        return buildSuccessResult(null, data);
+    }
+
+    public static Result buildSuccessResult() {
+        return buildSuccessResult(null, null);
+    }
+
+    public static Result buildSuccessResult(String message) {
+        return buildSuccessResult(message, null);
     }
 
     public static Result buildSuccessResult(String message, Object data) {

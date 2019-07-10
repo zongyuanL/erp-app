@@ -31,6 +31,12 @@ spring:
         uri: lb://service-buss
         predicates:
         - Path=/buss/**
+      - id: workflow
+        uri: lb://workflow
+        predicates:
+        - Path=/wf/**
+        filters:
+        - StripPrefix=1
       globalcors:
         cors-configurations:
           '[/**]':

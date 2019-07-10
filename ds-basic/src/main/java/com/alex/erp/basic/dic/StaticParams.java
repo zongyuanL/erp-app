@@ -37,12 +37,13 @@ public class StaticParams {
         public static final String SUFFIX_JS = getPathRexWithSuffix(PATH.JS);
         public static final String CSS = getPathRex(PATH.CSS);
         public static final String IMG = getPathRex(PATH.IMG);
+        public static final String ACTIVITI=getPathRex(PATH.ACTIVITI);
         public static final String HTML = getPathRexWithSuffix(PATH.HTML);
 
 
         public static String[] getBasicResource() {
             return new String[]{
-                    RESOURCE, STATIC, IMG, CSS, PREFIX_JS, SUFFIX_JS, HTML
+                    RESOURCE, STATIC, IMG, CSS, PREFIX_JS, SUFFIX_JS, HTML,ACTIVITI
             };
         }
 
@@ -78,6 +79,7 @@ public class StaticParams {
         public static final String LOGIN = "login";
         public static final String APP_LOGIN = "appLogin";
         public static final String ERROR = "error";
+        public static final String ACTIVITI="activiti";
         public static final String WEBSOCKET_SERVICE = "websocket-service";
 
         public static final String WEBSOCKET = "websocket";
@@ -109,6 +111,9 @@ public class StaticParams {
             return new String[]{MAIN, RESOURCES, API_DOCS, STATIC_RESOURCES};
         }
     }
+
+
+
 
     public static String[] getIgnorePath() {
         String[] ignorePathes = StringUtils.joinStringArray(

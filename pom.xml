@@ -33,6 +33,7 @@
 
         <activiti.version>5.22.0</activiti.version>
         <batik.version>1.7</batik.version>
+        <commons-lang3.version>3.9</commons-lang3.version>
     </properties>
     <modules>
         <module>eureka-server</module>

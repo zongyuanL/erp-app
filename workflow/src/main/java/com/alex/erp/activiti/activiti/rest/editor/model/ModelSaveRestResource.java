@@ -35,7 +35,7 @@ import java.io.InputStream;
  * @author Tijs Rademakers
  */
 @RestController
-@RequestMapping("service")
+@RequestMapping("/activiti/service")
 public class ModelSaveRestResource implements ModelDataJsonConstants {
   
   protected static final Logger LOGGER = LoggerFactory.getLogger(ModelSaveRestResource.class);
