@@ -41,7 +41,7 @@ public class ActivitiController {
             //保存模型
             repositoryService.saveModel(modelData);
             repositoryService.addModelEditorSource(modelData.getId(), editorNode.toString().getBytes("utf-8"));
-            response.sendRedirect(request.getContextPath() + "/acitivitiEditor/modeler.html?modelId=" + modelData.getId());
+            response.sendRedirect(request.getContextPath() + "/static/acitivitiEditor/modeler.html?modelId=" + modelData.getId());
         } catch (Exception e) {
             System.out.println("创建模型失败：");
         }

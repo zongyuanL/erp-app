@@ -49,5 +49,4 @@ public class EsRole extends BaseEntity {
 
     @TableField(exist = false)
     private Set<EsPermission> permissions;
-
 }
