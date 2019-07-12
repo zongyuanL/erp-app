@@ -6,7 +6,7 @@ package com.alex.erp.basic.baseconfig.utils;
  * @Author Alex ZY Liang
  * @Date 2019-07-01 4:20 PM
  */
-public class StringUtils {
+public class StringUtils extends org.apache.commons.lang3.StringUtils {
 
 
 

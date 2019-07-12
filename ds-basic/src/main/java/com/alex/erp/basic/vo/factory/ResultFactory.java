@@ -1,8 +1,10 @@
 package com.alex.erp.basic.vo.factory;
 
 
+import com.alex.erp.basic.baseconfig.utils.StringUtils;
 import com.alex.erp.basic.dic.ResultCode;
 import com.alex.erp.basic.vo.Result;
+import org.apache.commons.lang3.ObjectUtils;
 
 public class ResultFactory {
 
@@ -19,15 +21,28 @@ public class ResultFactory {
     }
 
     public static Result buildSuccessResult(String message, Object data) {
-        return buidResult(ResultCode.SUCCESS, ResultCode.SUCCESS.getMessage()+message, data);
+        return buidResult(
+                ResultCode.SUCCESS,
+                StringUtils.isAllEmpty(message)?ResultCode.SUCCESS.getMessage():message,
+                ObjectUtils.isEmpty(data)?"":data);
     }
 
     public static Result buildFailResult(int code,String message) {
-        return buidResult(code,message, null);
+        return buildFailResult(code,message, null);
     }
     public static Result buildFailResult(String message) {
-        return buidResult(ResultCode.OTHER_FAILED, message, null);
+        return buildFailResult(ResultCode.OTHER_FAILED.getCode(), message, null);
     }
+
+
+    public static Result buildFailResult(int code,String message,Object data) {
+        return buidResult(
+                code,
+                StringUtils.isAllEmpty(message)?"":message,
+                ObjectUtils.isEmpty(data)?"":data);
+    }
+
+
     public static Result buildServiceBrokendown(String message) {
         return buidResult(ResultCode.SERVICE_BROKENDOWN, message, null);
     }
@@ -38,7 +53,10 @@ public class ResultFactory {
 
 
     public static Result buidResult(int resultCode, String message, Object data) {
-        return new Result(resultCode, message, data);
+        return new Result(
+                resultCode,
+                StringUtils.isAllEmpty(message)?"":message,
+                ObjectUtils.isEmpty(data)?"":data);
     }
 
 

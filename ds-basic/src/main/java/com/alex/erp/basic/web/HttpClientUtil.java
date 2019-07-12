@@ -65,7 +65,7 @@ public class HttpClientUtil {
         int statusCode = response.getStatusLine().getStatusCode();
         if (statusCode == HttpStatus.OK.value()) {
             resString = EntityUtils.toString(response.getEntity(), "utf-8");
-            result =  ResultFactory.buildSuccessResult(resString);
+            result =  ResultFactory.buildSuccessResult("认证成功",resString);
         }else {
 
             result =  ResultFactory.buildFailResult("认证服务器连接失败");

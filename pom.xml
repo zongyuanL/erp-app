@@ -45,6 +45,7 @@
         <module>service-business</module>
         <module>configServer</module>
         <module>workflow</module>
+        <module>wechat</module>
     </modules>
 
     <dependencies>

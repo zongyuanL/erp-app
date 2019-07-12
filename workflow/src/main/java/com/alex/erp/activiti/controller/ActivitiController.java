@@ -76,17 +76,17 @@ public class ActivitiController {
             editorNode.put("stencilset", stencilSetNode);
             Model modelData = repositoryService.newModel();
             ObjectNode modelObjectNode = objectMapper.createObjectNode();
-            modelObjectNode.put(ModelDataJsonConstants.MODEL_NAME, "hello1111");
+            modelObjectNode.put(ModelDataJsonConstants.MODEL_NAME, "model_name");
             modelObjectNode.put(ModelDataJsonConstants.MODEL_REVISION, 1);
-            String description = "hello1111";
+            String description = "Description";
             modelObjectNode.put(ModelDataJsonConstants.MODEL_DESCRIPTION, description);
             modelData.setMetaInfo(modelObjectNode.toString());
-            modelData.setName("hello1111");
-            modelData.setKey("12313123");
+            modelData.setName("Name");
+            modelData.setKey("Key");
             //保存模型
             repositoryService.saveModel(modelData);
             repositoryService.addModelEditorSource(modelData.getId(), editorNode.toString().getBytes("utf-8"));
-            response.sendRedirect(request.getContextPath() + "/static/acitivitiEditor/modeler.html?modelId=" + modelData.getId());
+            response.sendRedirect(request.getContextPath() + "/static/modeler.html?modelId=" + modelData.getId());
         } catch (Exception e) {
             log.warn("创建模型失败：%s",e.getLocalizedMessage());
         }

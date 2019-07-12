@@ -24,7 +24,7 @@ import org.springframework.web.cors.reactive.CorsUtils;
 //@Order(Ordered.HIGHEST_PRECEDENCE)
 public class CorsConfig {
     private static final String ALL = "*";
-    private static final String MAX_AGE = "18000L";
+    private static final String MAX_AGE = "3600";
     public static void main(String[] args) {
         SpringApplication.run(CorsConfig.class, args);
     }
