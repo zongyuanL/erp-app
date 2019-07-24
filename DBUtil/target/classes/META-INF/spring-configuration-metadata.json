@@ -1,27 +1,18 @@
 {
   "groups": [
     {
-      "name": "spring.datasource",
-      "type": "com.alex.erp.dbutil.DataSourcePeoperties",
-      "sourceType": "com.alex.erp.dbutil.DataSourcePeoperties"
-    }
-  ],
-  "properties": [
-    {
-      "name": "spring.datasource.password",
-      "type": "java.lang.String",
-      "sourceType": "com.alex.erp.dbutil.DataSourcePeoperties"
+      "name": "spring.druid.eva",
+      "type": "javax.sql.DataSource",
+      "sourceType": "com.alex.erp.dbutil.config.mybatisplus.MybatisPlusConfig",
+      "sourceMethod": "db_eva()"
     },
     {
-      "name": "spring.datasource.url",
-      "type": "java.lang.String",
-      "sourceType": "com.alex.erp.dbutil.DataSourcePeoperties"
-    },
-    {
-      "name": "spring.datasource.username",
-      "type": "java.lang.String",
-      "sourceType": "com.alex.erp.dbutil.DataSourcePeoperties"
+      "name": "spring.druid.um",
+      "type": "javax.sql.DataSource",
+      "sourceType": "com.alex.erp.dbutil.config.mybatisplus.MybatisPlusConfig",
+      "sourceMethod": "db_um()"
     }
   ],
+  "properties": [],
   "hints": []
 }

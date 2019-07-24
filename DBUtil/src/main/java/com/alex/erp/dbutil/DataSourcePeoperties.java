@@ -11,10 +11,10 @@ import org.springframework.context.annotation.PropertySource;
  * @Author Alex ZY Liang
  * @Date 2019-07-04 2:57 PM
  */
-@Configuration
-@Data
-@ConfigurationProperties(prefix = "spring.datasource")
-@PropertySource("classpath:config/application.yml")
+//@Configuration
+//@Data
+//@ConfigurationProperties(prefix = "spring.datasource")
+//@PropertySource("classpath:config/application.yml")
 public class DataSourcePeoperties{
     private  String url;
     private  String username;

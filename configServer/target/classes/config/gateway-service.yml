@@ -31,17 +31,25 @@ spring:
         uri: lb://service-buss
         predicates:
         - Path=/buss/**
+        filters:
+        - StripPrefix=1
       - id: workflow
         uri: lb://workflow
         predicates:
         - Path=/wf/**
         filters:
         - StripPrefix=1
+      - id: wechat
+        uri: lb://wechat
+        predicates:
+        - Path=/wechat/**
+        filters:
+        - StripPrefix=1
       globalcors:
         cors-configurations:
           '[/**]':
             allowedOrigins: "*"
-            allowedMethods: "GET,POST,DELETE"
+            allowedMethods: "GET,POST,DELETE,PUT"
             allowedheaders: "*"
             allow-credentials: true
   zipkin:

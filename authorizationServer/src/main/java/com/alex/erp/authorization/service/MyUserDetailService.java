@@ -1,6 +1,8 @@
 package com.alex.erp.authorization.service;
 
 
+import com.alex.erp.dbutil.config.db.DataSourceEnum;
+import com.alex.erp.dbutil.config.db.annotation.DataSource;
 import com.alex.erp.dbutil.um.dao.MemberDao;
 import com.alex.erp.dbutil.um.entity.*;
 import com.alex.erp.dbutil.um.mapper.EsMemberMapper;
@@ -24,7 +26,9 @@ import java.util.Set;
  * @author wangmx
  * @since 1.0.0
  */
+
 @Service//("userDetailService")
+//@DataSource(DataSourceEnum.DB_UM)
 public class MyUserDetailService implements UserDetailsService {
 
     @Autowired

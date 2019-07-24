@@ -51,7 +51,6 @@ public class MemberController {
 
     public Result authrize(@RequestBody Map object) {
 
-        ObjectMapper objectMapper = new ObjectMapper();
         try {
             return HttpClientUtil.sendPostDataByMap(
                     ConfigurationProperties.authrizeURL,

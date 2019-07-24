@@ -18,6 +18,9 @@ public class StaticParams {
     private final static String getPathRex(String path) {
         return "/" + path + "/**";
     }
+    private final static String getPathRexInMiddle(String path) {
+        return "/**/" + path + "/**";
+    }
 
     private final static String getPathRexWithSuffix(String path) {
         return "/**/*." + path;
@@ -38,12 +41,13 @@ public class StaticParams {
         public static final String CSS = getPathRex(PATH.CSS);
         public static final String IMG = getPathRex(PATH.IMG);
         public static final String ACTIVITI=getPathRex(PATH.ACTIVITI);
+        public static final String OPEN_API=getPathRexInMiddle(PATH.OPEN_API);
         public static final String HTML = getPathRexWithSuffix(PATH.HTML);
 
 
         public static String[] getBasicResource() {
             return new String[]{
-                    RESOURCE, STATIC, IMG, CSS, PREFIX_JS, SUFFIX_JS, HTML,ACTIVITI
+                    RESOURCE, STATIC, IMG, CSS, PREFIX_JS, SUFFIX_JS, HTML,ACTIVITI,OPEN_API
             };
         }
 
@@ -80,6 +84,7 @@ public class StaticParams {
         public static final String APP_LOGIN = "appLogin";
         public static final String ERROR = "error";
         public static final String ACTIVITI="activiti";
+        public static final String OPEN_API="openApi";
         public static final String WEBSOCKET_SERVICE = "websocket-service";
 
         public static final String WEBSOCKET = "websocket";

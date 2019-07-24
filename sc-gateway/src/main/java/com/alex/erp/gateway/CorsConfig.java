@@ -1,11 +1,21 @@
 package com.alex.erp.gateway;
 
+//==========================================
+//==========================================
+//==========================================
+//使用配置文件的方式进行cors，因此这个类不需要启动了
+//==========================================
+//==========================================
+//==========================================
+
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.gateway.discovery.DiscoveryClientRouteDefinitionLocator;
 import org.springframework.cloud.gateway.discovery.DiscoveryLocatorProperties;
 import org.springframework.cloud.gateway.route.RouteDefinitionLocator;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -19,9 +29,13 @@ import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 import org.springframework.web.cors.reactive.CorsUtils;
 
+
+
+
 //@SpringBootApplication
 //@EnableDiscoveryClient
 //@Order(Ordered.HIGHEST_PRECEDENCE)
+//@Configuration
 public class CorsConfig {
     private static final String ALL = "*";
     private static final String MAX_AGE = "3600";

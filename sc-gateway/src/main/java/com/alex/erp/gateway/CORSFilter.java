@@ -24,14 +24,14 @@ import reactor.core.publisher.Mono;
  * @Date 2019-06-25 6:56 PM
  */
 
-@Configuration
+//@Configuration
 public class CORSFilter {
     @Value("com.test")
     private String dic;
 
-    public void CORSFilter(){
-        System.out.println(this.dic);
-    }
+//    public void CORSFilter(){
+//        System.out.println(this.dic);
+//    }
 //    private static final String ALL = "*";
 //    private static final String MAX_AGE = "18000L";
 //    /* @Bean

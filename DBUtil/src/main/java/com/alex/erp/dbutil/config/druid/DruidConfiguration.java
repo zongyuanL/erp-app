@@ -108,30 +108,30 @@ public class DruidConfiguration {
         return datasource;
     }
 
-//    @Bean
-//    public ServletRegistrationBean statViewServlet() {
-//        ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(new StatViewServlet(), "/druid/*");
-//        //设置ip白名单
-//        servletRegistrationBean.addInitParameter("allow", "127.0.0.1");
-//        //设置ip黑名单，优先级高于白名单
-//        servletRegistrationBean.addInitParameter("deny", "192.168.0.19");
-//        //设置控制台管理用户
-//        servletRegistrationBean.addInitParameter("loginUsername", "root");
-//        servletRegistrationBean.addInitParameter("loginPassword", "root");
-//        //是否可以重置数据
-//        servletRegistrationBean.addInitParameter("resetEnable", "false");
-//        return servletRegistrationBean;
-//    }
-//
-//    @Bean
-//    public FilterRegistrationBean statFilter() {
-//        //创建过滤器
-//        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean(new WebStatFilter());
-//        //设置过滤器过滤路径
-//        filterRegistrationBean.addUrlPatterns("/*");
-//        //忽略过滤的形式
-//        filterRegistrationBean.addInitParameter("exclusions", "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*");
-//        return filterRegistrationBean;
-//    }
 
+    @Bean
+    public ServletRegistrationBean startViewServlet(){
+        ServletRegistrationBean servletRegistrationBean =
+                new ServletRegistrationBean(new StatViewServlet(),"/druid/*");
+//        // IP白名单
+//        servletRegistrationBean.addInitParameter("allow","127.0.0.1");
+//        // IP黑名单(共同存在时，deny优先于allow)
+//        servletRegistrationBean.addInitParameter("deny","127.0.0.1");
+        //控制台管理用户
+        servletRegistrationBean.addInitParameter("loginUsername","admin");
+        servletRegistrationBean.addInitParameter("loginPassword","123456");
+        //是否能够重置数据
+        servletRegistrationBean.addInitParameter("resetEnable","false");
+        return servletRegistrationBean;
+    }
+
+    @Bean
+    public FilterRegistrationBean statFilter(){
+        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean(new WebStatFilter());
+        //添加过滤规则
+        filterRegistrationBean.addUrlPatterns("/*");
+        //忽略过滤的格式
+        filterRegistrationBean.addInitParameter("exclusions","*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*");
+        return filterRegistrationBean;
+    }
 }
