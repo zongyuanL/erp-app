@@ -11,11 +11,27 @@
 
     <artifactId>service-wechat</artifactId>
     <dependencies>
+        <!--<dependency>-->
+            <!--<groupId>com.netflix.feign</groupId>-->
+            <!--<artifactId>feign-httpclient</artifactId>-->
+            <!--<version>8.18.0</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>com.alex.erp</groupId>
             <artifactId>ds-basic</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>com.alex.erp</groupId>
+            <artifactId>DBUtil</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

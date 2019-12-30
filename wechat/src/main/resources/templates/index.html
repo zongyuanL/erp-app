@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="../static/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="../static/js/ServerConstant.js"></script>
+<script type="text/javascript">
+	// var baseServerUrl='jcf8ge.natappfree.cc';
+    var loginURL = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx1a1bf2182af25af1&redirect_uri=http%3A%2F%2F"+baseServerUrl+"%2Fwechat%2Fapp%2FgetCode&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+// var loginURL = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb86f91df6604ce35&redirect_uri=http%3A%2F%2F6jdfag.natappfree.cc%2Fapp%2FgetCode&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+$(function (){
+    /*alert("begin");
+	var returnData = $("input[name='authInfo']").val();
+    alert(returnData);
+	if(returnData){
+		var json = JSON.parse(returnData);
+		var data = JSON.parse(json['data']);
+		var openID = data['openid'];
+		alert(openID);
+		var storage = window.localStorage;
+		storage.setItem("userOpenID", openID);
+		//var openID = storage.getItem("userOpenID");
+		if(openID){
+			 $.ajax({
+				url:"http://"+baseServerUrl+"/wechat/api/checkLogin",
+				type:"POST",
+				data:"openID="+openID,
+				dataType:"json",
+				success:function(data){
+					if(data.code == "200"){
+						$("#title").text(data.userInfo.name+",欢迎来到叠创数字化校园APP");
+					}else{
+						window.location.href = "http://"+baseServerUrl+"/wechat/api/login?openID="+openID;
+					}
+					console.log(data);
+				}
+			})
+		}else{
+			window.location.href = loginURL;
+		}
+	}else{
+		window.location.href = loginURL;
+	}*/
+})
+	function logout(){
+    alert("1");
+	$.ajax({
+		url:"http://"+baseServerUrl+"/wechat/api/logout",
+		type:"POST",
+		dataType:"json",
+		contentType:"application/x-www-form-urlencoded; charset=utf-8",
+		success:function(data){
+			if(data.code=='200'){
+				alert(data.message);
+				window.location.href = loginURL;
+			}else{
+				alert(data.message)
+			}
+		},
+		error:function(data){
+		    alert("error:"+data);
+		}
+	});
+}
+</script>
+</head>
+<body>
+	<div id="title" style="height:150px;font-size:28px;"></div>
+	<input style="height:150px;font-size:28px;" name="logout" value="登出2" type="button" id="logout" onclick="logout()"></input>
+	<input type="hidden" name="authInfo" th:value="${data}"></input>
+</body>
+</html>

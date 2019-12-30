@@ -22,6 +22,7 @@ public class Member{
     private Date birthday;
     private Date createTime;
     private Set<Role> roles;
+    private String openID;
 
     public int getId() {
         return id;
@@ -94,4 +95,9 @@ public class Member{
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+
+    public void setOpenID(String openID){this.openID = openID;}
+
+    public String getOpenID(){return this.openID;}
 }

@@ -103,7 +103,7 @@ var KisBpmOutParametersPopupCtrl = [ '$scope', '$q', '$translate', function($sco
     $scope.moveParameterUp = function() {
         if ($scope.selectedParameters.length > 0) {
             var index = $scope.parameters.indexOf($scope.selectedParameters[0]);
-            if (index != 0) { // If it's the first, no moving up of course
+            if (index != 0) { // If it's the first, no moving up of secondCoursePlan
                 // Reason for funny way of swapping, see https://github.com/angular-ui/ng-grid/issues/272
                 var temp = $scope.parameters[index];
                 $scope.parameters.splice(index, 1);
@@ -119,7 +119,7 @@ var KisBpmOutParametersPopupCtrl = [ '$scope', '$q', '$translate', function($sco
     $scope.moveParameterDown = function() {
         if ($scope.selectedParameters.length > 0) {
             var index = $scope.parameters.indexOf($scope.selectedParameters[0]);
-            if (index != $scope.parameters.length - 1) { // If it's the last element, no moving down of course
+            if (index != $scope.parameters.length - 1) { // If it's the last element, no moving down of secondCoursePlan
                 // Reason for funny way of swapping, see https://github.com/angular-ui/ng-grid/issues/272
                 var temp = $scope.parameters[index];
                 $scope.parameters.splice(index, 1);

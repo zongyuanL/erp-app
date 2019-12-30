@@ -1,6 +1,8 @@
 package com.alex.erp.business.controller;
 
 
+import com.alex.erp.basic.vo.Menu;
+import com.alex.erp.basic.vo.Result;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
@@ -34,9 +36,11 @@ public class BussinessController {
     @ApiOperation(value="无权限测试接口",notes = "没有 hasAuthority 选项", httpMethod = "GET")
     @ApiImplicitParam(name="username",value="用户名", required = false,defaultValue = "alex",dataType = "string")
     @GetMapping("/withoutright")
-    public String getDemo2(@RequestParam(value="username",defaultValue = "alex") String userName ){
+    public Result<Menu> getDemo2(@RequestParam(value="username",defaultValue = "alex") String userName ){
 
         log.warn("runing buss without right");
-        return "hi @"+userName+",that is good without right";
+//        return "hi @"+userName+",that is good without right";
+        return null;
     }
+
 }

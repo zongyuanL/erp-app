@@ -210,7 +210,7 @@ var KisBpmEventListenersPopupCtrl = [ '$scope', '$q', '$translate', function($sc
     $scope.moveListenerUp = function() {
         if ($scope.selectedListeners.length > 0) {
             var index = $scope.eventListeners.indexOf($scope.selectedListeners[0]);
-            if (index != 0) { // If it's the first, no moving up of course
+            if (index != 0) { // If it's the first, no moving up of secondCoursePlan
                 // Reason for funny way of swapping, see https://github.com/angular-ui/ng-grid/issues/272
                 var temp = $scope.eventListeners[index];
                 $scope.eventListeners.splice(index, 1);
@@ -226,7 +226,7 @@ var KisBpmEventListenersPopupCtrl = [ '$scope', '$q', '$translate', function($sc
     $scope.moveListenerDown = function() {
         if ($scope.selectedListeners.length > 0) {
             var index = $scope.eventListeners.indexOf($scope.selectedListeners[0]);
-            if (index != $scope.eventListeners.length - 1) { // If it's the last element, no moving down of course
+            if (index != $scope.eventListeners.length - 1) { // If it's the last element, no moving down of secondCoursePlan
                 // Reason for funny way of swapping, see https://github.com/angular-ui/ng-grid/issues/272
                 var temp = $scope.eventListeners[index];
                 $scope.eventListeners.splice(index, 1);

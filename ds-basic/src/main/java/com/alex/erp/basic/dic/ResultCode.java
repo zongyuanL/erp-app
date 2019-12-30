@@ -64,4 +64,5 @@ public enum ResultCode {
     public void setMessage(String message) {
         this.message = message;
     }
+
 }

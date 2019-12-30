@@ -75,7 +75,7 @@ public class HttpClientUtil {
             result =  ResultFactory.buildSuccessResult(String.valueOf(statusCode),resString);
         }else {
 
-            result =  ResultFactory.buildFailResult(statusCode,response.getStatusLine().toString());
+            result =  ResultFactory.buildFailResult(statusCode,"调用认证服务器失败:"+response.getStatusLine().toString());
 
         }
         // 释放链接

@@ -138,7 +138,7 @@ var KisBpmFieldsPopupCtrl = [ '$scope', '$q', '$translate', function($scope, $q,
     $scope.moveFieldUp = function() {
         if ($scope.selectedFields.length > 0) {
             var index = $scope.fields.indexOf($scope.selectedFields[0]);
-            if (index != 0) { // If it's the first, no moving up of course
+            if (index != 0) { // If it's the first, no moving up of secondCoursePlan
                 // Reason for funny way of swapping, see https://github.com/angular-ui/ng-grid/issues/272
                 var temp = $scope.fields[index];
                 $scope.fields.splice(index, 1);
@@ -154,7 +154,7 @@ var KisBpmFieldsPopupCtrl = [ '$scope', '$q', '$translate', function($scope, $q,
     $scope.moveFieldDown = function() {
         if ($scope.selectedFields.length > 0) {
             var index = $scope.fields.indexOf($scope.selectedFields[0]);
-            if (index != $scope.fields.length - 1) { // If it's the last element, no moving down of course
+            if (index != $scope.fields.length - 1) { // If it's the last element, no moving down of secondCoursePlan
                 // Reason for funny way of swapping, see https://github.com/angular-ui/ng-grid/issues/272
                 var temp = $scope.fields[index];
                 $scope.fields.splice(index, 1);

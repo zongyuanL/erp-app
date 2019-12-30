@@ -1,0 +1,13 @@
+spring:
+  http:
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
+  mvc:
+    static-path-pattern: /static/**
+  application:
+    name: wechat
+feign:
+  httpclient:
+    enabled: true

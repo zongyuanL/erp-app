@@ -3,13 +3,17 @@ package com.alex.erp.authorization.controller;
 import com.alex.erp.authorization.service.AuthorizeService;
 import com.alex.erp.authorization.service.MyUserDetailService;
 import com.alex.erp.basic.ConfigurationProperties;
+import com.alex.erp.basic.dic.ResultCode;
 import com.alex.erp.basic.dic.SystemConfig;
 import com.alex.erp.basic.vo.Result;
 import com.alex.erp.basic.vo.factory.ResultFactory;
 import com.alex.erp.basic.web.HttpClientUtil;
 import com.alex.erp.authorization.service.MyUserDetailService;
 import com.alex.erp.authorization.service.AuthorizeService;
+import com.alex.erp.dbutil.um.entity.EsMember;
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.provider.token.ConsumerTokenServices;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +30,7 @@ import java.util.Map;
  * @since 1.0.0
  */
 @RestController
+@Log4j2
 //@RequestMapping("/api")
 public class MemberController {
 
@@ -49,13 +54,27 @@ public class MemberController {
     @ResponseBody
 //    public Result authrize(String grant_type,String client_id,String client_secret,String username,String password,String redirect_uri) {
 
-    public Result authrize(@RequestBody Map object) {
+    public Result<EsMember> authrize(@RequestBody Map object) {
 
         try {
-            return HttpClientUtil.sendPostDataByMap(
+            Result toeknResult = HttpClientUtil.sendPostDataByMap(
                     ConfigurationProperties.authrizeURL,
                     object,
                     SystemConfig.UTF8);
+            if(toeknResult.getCode()!=ResultCode.SUCCESS.getCode()){
+                return ResultFactory.buildFailResult(toeknResult.getMessage());
+            }
+            EsMember member = new EsMember();
+
+            JSONObject jsonObject = JSONObject
+                    .parseObject(toeknResult.getData().toString());
+            //string
+
+            member.setAccessToken(jsonObject.getString("access_token"));
+            member.setRefreshToken(jsonObject.getString("refresh_token"));
+            log.info(String.format("%s authorize success. a_token is %s, R_token is %s.",this.getClass(),jsonObject.getString("access_token"),jsonObject.getString("refresh_token")));
+            return ResultFactory.buildSuccessResult(member);
+
         } catch (IOException e) {
             return ResultFactory.buildFailResult("无法连接认证服务器");
         }

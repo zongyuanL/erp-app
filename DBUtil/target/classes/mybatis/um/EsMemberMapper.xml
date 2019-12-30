@@ -4,7 +4,7 @@
 
 
     <resultMap id="baseResultMap" type="com.alex.erp.dbutil.um.entity.EsMember">
-        <id property="id" column="id" jdbcType="INTEGER" />
+        <id property="id" column="id" jdbcType="VARCHAR" />
         <result property="memberName" column="member_name" jdbcType="VARCHAR" />
         <result property="password" column="password" jdbcType="VARCHAR" />
         <result property="mobile" column="mobile" jdbcType="VARCHAR" />

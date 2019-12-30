@@ -31,6 +31,12 @@ public class EsMember extends BaseEntity {
     private String memberName;
 
     /**
+     * 关联的微信openID
+     **/
+    @TableField("openID")
+    private String openID;
+
+    /**
      * 密码
      */
     private String password;
@@ -63,6 +69,12 @@ public class EsMember extends BaseEntity {
 
     @TableField(exist = false)
     private Set<EsRole> roles;
+
+    @TableField(exist = false)
+    private String accessToken;
+
+    @TableField(exist = false)
+    private String refreshToken;
 
 
 }

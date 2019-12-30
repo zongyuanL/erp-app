@@ -820,7 +820,7 @@ if (!Date.parse || "Date.parse is buggy") {
             "(\\d{4}|[\+\-]\\d{6})" + // four-digit year capture or sign +
                                       // 6-digit extended year
             "(?:-(\\d{2})" + // optional month capture
-            "(?:-(\\d{2})" + // optional day capture
+            "(?:-(\\d{2})" + // optional weekDay capture
             "(?:" + // capture hours:minutes:seconds.milliseconds
                 "T(\\d{2})" + // hours capture
                 ":(\\d{2})" + // minutes capture

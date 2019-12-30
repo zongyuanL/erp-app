@@ -45,7 +45,7 @@
 
         this.setOptions(options, cb);
 
-        //apply CSS classes and labels to buttons
+        //apply CSS aClasses and labels to buttons
         var c = this.container;
         $.each(this.buttonClasses, function (idx, val) {
             c.find('button').addClass(val);
@@ -175,7 +175,7 @@
             if (typeof options.dateLimit === 'object')
                 this.dateLimit = options.dateLimit;
 
-            // update day names order to firstDay
+            // update weekDay names order to firstDay
             if (typeof options.locale === 'object') {
 
                 if (typeof options.locale.daysOfWeek === 'object') {

@@ -9,4 +9,6 @@ package com.alex.erp.wechat.dto;
 public class AccessTokenInfo {
     //注意是静态的
     public static AccessToken accessToken = null;
+
+    public static JsapiTicket jsapiTicket = null;
 }

@@ -33,7 +33,8 @@ public class StaticParams {
         public static final String ALL = getPathRex(PATH.ALL);
         public static final String VIEW = getPathRex(PATH.VIEW);
         public static final String ADMIN = getPathRex(PATH.ADMIN);
-        public static final String API = getPathRex(PATH.API);
+        public static final String API = getPathRexInMiddle(PATH.API);
+        public static final String APP = getPathRexInMiddle(PATH.APP);
         public static final String RESOURCE = getPathRex(PATH.RESOURCE);
         public static final String STATIC = getPathRex(PATH.STATIC);
         public static final String PREFIX_JS = getPathRex(PATH.JS);
@@ -47,7 +48,7 @@ public class StaticParams {
 
         public static String[] getBasicResource() {
             return new String[]{
-                    RESOURCE, STATIC, IMG, CSS, PREFIX_JS, SUFFIX_JS, HTML,ACTIVITI,OPEN_API
+                    RESOURCE, STATIC, IMG, CSS, PREFIX_JS, SUFFIX_JS, HTML,ACTIVITI,OPEN_API,API
             };
         }
 
@@ -60,10 +61,11 @@ public class StaticParams {
         public static final String LOGIN = getPathRex(PATH.LOGIN);
         public static final String APP_LOGIN = getPathRex(PATH.APP_LOGIN);
         public static final String OAUTH = getPathRex(OAUTHPATH.OAUTH);
+        public static final String AUTH = getPathRex(OAUTHPATH.AUTH);
 
         public static String[] getAuthResource() {
             return new String[]{
-                     ERROR, LOGIN, APP_LOGIN, OAUTH
+                    ERROR, LOGIN, APP_LOGIN, OAUTH,AUTH
             };
         }
 
@@ -74,6 +76,7 @@ public class StaticParams {
         public static final String VIEW = "view";
         public static final String ADMIN = "admin";
         public static final String API = "api";
+        public static final String APP = "app";
         public static final String RESOURCE = "resource";
         public static final String STATIC = "static";
         public static final String JS = "js";
@@ -93,6 +96,7 @@ public class StaticParams {
 
     public static class OAUTHPATH {
         public static final String OAUTH = "oauth";
+        public static final String AUTH = "auth";
 
     }
 

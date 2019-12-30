@@ -29,6 +29,7 @@ public class EsMemberServiceImpl extends ServiceImpl<EsMemberMapper, EsMember> i
     @Override
     public EsMember findByMemberName(String memberName){
       return esMemberMapper.findByMemberName(memberName);
-    };
+    }
+
 
 }

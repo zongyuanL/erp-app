@@ -27,6 +27,9 @@ public class ResultFactory {
                 ObjectUtils.isEmpty(data)?"":data);
     }
 
+    public static Result buildFailResult(Enum<ResultCode> resultCodeEnum) {
+        return buildFailResult(resultCodeEnum.ordinal(),resultCodeEnum.name());
+    }
     public static Result buildFailResult(int code,String message) {
         return buildFailResult(code,message, null);
     }

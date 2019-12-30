@@ -157,7 +157,7 @@ var KisBpmFormPropertiesPopupCtrl = ['$scope', '$q', '$translate', '$timeout', f
     $scope.movePropertyUp = function() {
         if ($scope.selectedProperties.length > 0) {
             var index = $scope.formProperties.indexOf($scope.selectedProperties[0]);
-            if (index != 0) { // If it's the first, no moving up of course
+            if (index != 0) { // If it's the first, no moving up of secondCoursePlan
                 // Reason for funny way of swapping, see https://github.com/angular-ui/ng-grid/issues/272
                 var temp = $scope.formProperties[index];
                 $scope.formProperties.splice(index, 1);
@@ -173,7 +173,7 @@ var KisBpmFormPropertiesPopupCtrl = ['$scope', '$q', '$translate', '$timeout', f
     $scope.movePropertyDown = function() {
         if ($scope.selectedProperties.length > 0) {
             var index = $scope.formProperties.indexOf($scope.selectedProperties[0]);
-            if (index != $scope.formProperties.length - 1) { // If it's the last element, no moving down of course
+            if (index != $scope.formProperties.length - 1) { // If it's the last element, no moving down of secondCoursePlan
                 // Reason for funny way of swapping, see https://github.com/angular-ui/ng-grid/issues/272
                 var temp = $scope.formProperties[index];
                 $scope.formProperties.splice(index, 1);
@@ -220,7 +220,7 @@ var KisBpmFormPropertiesPopupCtrl = ['$scope', '$q', '$translate', '$timeout', f
     $scope.moveEnumValueUp = function() {
     	if ($scope.selectedProperties.length > 0 && $scope.selectedEnumValues.length > 0) {
     		var index = $scope.selectedProperties[0].enumValues.indexOf($scope.selectedEnumValues[0]);
-            if (index != 0) { // If it's the first, no moving up of course
+            if (index != 0) { // If it's the first, no moving up of secondCoursePlan
                 // Reason for funny way of swapping, see https://github.com/angular-ui/ng-grid/issues/272
                 var temp = $scope.selectedProperties[0].enumValues[index];
                 $scope.selectedProperties[0].enumValues.splice(index, 1);
@@ -236,7 +236,7 @@ var KisBpmFormPropertiesPopupCtrl = ['$scope', '$q', '$translate', '$timeout', f
     $scope.moveEnumValueDown = function() {
     	if ($scope.selectedProperties.length > 0 && $scope.selectedEnumValues.length > 0) {
     		var index = $scope.selectedProperties[0].enumValues.indexOf($scope.selectedEnumValues[0]);
-            if (index != $scope.selectedProperties[0].enumValues.length - 1) { // If it's the last element, no moving down of course
+            if (index != $scope.selectedProperties[0].enumValues.length - 1) { // If it's the last element, no moving down of secondCoursePlan
                 // Reason for funny way of swapping, see https://github.com/angular-ui/ng-grid/issues/272
                 var temp = $scope.selectedProperties[0].enumValues[index];
                 $scope.selectedProperties[0].enumValues.splice(index, 1);

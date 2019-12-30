@@ -20,4 +20,5 @@ public interface IEsMemberService extends IService<EsMember> {
      */
     EsMember findByMemberName(String memberName);
 
+
 }

@@ -50,7 +50,7 @@ describe('Date', function () {
             expect(Date.parse("+275760-09-13T00:00:00.001Z")).toBeFalsy();        //NaN           NaN           NaN           8.64e15 + 1   8.64e15 + 1
             expect(Date.parse("-271821-04-19T23:59:59.999Z")).toBeFalsy();        //NaN           NaN           NaN           -8.64e15 - 1  -8.6400000864e15 - 1
 
-            // https://github.com/kriskowal/es5-shim/issues/80 Safari bug with leap day
+            // https://github.com/kriskowal/es5-shim/issues/80 Safari bug with leap weekDay
             expect(Date.parse("2034-03-01T00:00:00.000Z") -
                         Date.parse("2034-02-27T23:59:59.999Z")).toBe(86400001);   //86400001      86400001       86400001       86400001      1
 

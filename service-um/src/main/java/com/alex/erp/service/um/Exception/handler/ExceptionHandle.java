@@ -1,6 +1,6 @@
 package com.alex.erp.service.um.Exception.handler;
 
-import com.alex.demosplit.serviceum.Exception.UserLoginException;
+import com.alex.erp.service.um.Exception.UserLoginException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

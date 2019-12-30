@@ -11,7 +11,7 @@ spring:
       discovery:
         enabled: true
         service-id: config-server
-
+      profile: dev
 server:
   port: 8764
   servlet:

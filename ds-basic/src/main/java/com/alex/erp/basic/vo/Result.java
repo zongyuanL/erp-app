@@ -3,7 +3,7 @@ package com.alex.erp.basic.vo;
 import lombok.Data;
 
 @Data
-public class Result {
+public class Result<T> {
 
     /**
      * 响应状态码
@@ -16,12 +16,12 @@ public class Result {
     /**
      * 响应结果对象
      */
-    private Object data;
+    private T data;
 
     public Result(){
     }
 
-    public Result(int code, String message, Object data) {
+    public Result(int code, String message, T data) {
         this.code = code;
         this.message = message;
         this.data = data;

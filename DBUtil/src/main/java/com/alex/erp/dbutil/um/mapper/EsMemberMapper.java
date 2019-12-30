@@ -20,4 +20,7 @@ public interface EsMemberMapper extends BaseMapper<EsMember> {
      */
     EsMember findByMemberName(String memberName);
 
+
+
+
 }

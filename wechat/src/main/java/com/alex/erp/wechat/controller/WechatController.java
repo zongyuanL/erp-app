@@ -1,31 +1,25 @@
 package com.alex.erp.wechat.controller;
 
 
-import com.alex.erp.basic.web.HttpClientUtil;
-import com.alex.erp.wechat.MessageHandlerUtil;
-import com.alex.erp.wechat.config.WechatConstants;
-import com.alex.erp.wechat.dto.AccessTokenInfo;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+import com.alex.erp.wechat.templates.MessageTemplate;
+import com.alex.erp.wechat.templates.TemplateConstants;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
 @Log4j2
 public class WechatController {
-
 
     private final String TOKEN = "alex";
 
@@ -57,7 +51,7 @@ public class WechatController {
         }
     }
 
-    @ApiOperation(value="微信消息接口",notes = "带权限登录", httpMethod = "POST")
+   /* @ApiOperation(value="微信消息接口",notes = "带权限登录", httpMethod = "POST")
     @PostMapping("/openApi/authorize")
     public String message(HttpServletRequest request){
         // TODO 接收、处理、响应由微信服务器转发的用户发送给公众帐号的消息
@@ -127,33 +121,22 @@ public class WechatController {
         }
         return null;
 
-    }
+    }*/
     @ApiOperation(value="微信消息接口",notes = "带权限登录", httpMethod = "GET")
     @GetMapping("/openApi/sendMessageByTemplate")
     public String sendMessageByTemplate(
-            @RequestParam(value="name") String userId,
+            @RequestParam(value="name") String userId,@RequestParam(value="title") String title,
             @RequestParam(value="message",required = false) String message){
-
-
-
-
-        try {
-            String sendMessageUrl = String.format(WechatConstants.POST_TEMPLATE_SEND_MESSAGE_UR,AccessTokenInfo.accessToken.getAccessToken());
-            log.info(sendMessageUrl);
-            String messageBody = String.format(WechatConstants.MESSAGE_TENPLATE,userId);
-            log.info(messageBody);
-            String aa=HttpClientUtil.sendPostDataByJson(sendMessageUrl , messageBody,"UTF-8");
-            log.info("1.推送消息请求微信接口=="+aa);
-            log.info("2.推送消息请求微信接口=="+JSON.toJSONString(aa));
-            return aa;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-
+    	Map<String,String> params = new HashMap<>();
+    	params.put("first", title);
+    	params.put("keyword1", "微信APP端");
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    	params.put("keyword2", sdf.format(new Date()));
+    	params.put("remark", message);
+    	String redirectUrl = "https://www.baidu.com";
+    	String result = MessageTemplate.pushMessage(userId, redirectUrl, TemplateConstants.MESSAGE_INFO, params);
+        return result;
     }
-
-
 
     /**
      * 排序方法

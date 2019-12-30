@@ -1709,7 +1709,7 @@ ResourceManager = {
  */
 
 /**
- * The super class for all classes in ORYX. Adds some OOP feeling to javascript.
+ * The super class for all aClasses in ORYX. Adds some OOP feeling to javascript.
  * See article "Object Oriented Super Class Method Calling with JavaScript" on
  * http://truecode.blogspot.com/2006/08/object-oriented-super-class-method.html
  * for a documentation on this. Fairly good article that points out errors in
@@ -1726,7 +1726,7 @@ var Clazz = function() {};
 Clazz.prototype.construct = function() {};
 
 /**
- * Can be used to build up inheritances of classes.
+ * Can be used to build up inheritances of aClasses.
  * @example
  * var MyClass = Clazz.extend({
  *   construct: function(myParam){
@@ -6455,12 +6455,12 @@ ORYX.Core.StencilSet.Property = Clazz.extend({
      * Format  Output      Description
      *	------  ----------  --------------------------------------------------------------
      *	  d      10         Day of the month, 2 digits with leading zeros
-     *	  D      Wed        A textual representation of a day, three letters
+     *	  D      Wed        A textual representation of a weekDay, three letters
      *	  j      10         Day of the month without leading zeros
-     *	  l      Wednesday  A full textual representation of the day of the week
-     *	  S      th         English ordinal day of month suffix, 2 chars (use with j)
-     *	  w      3          Numeric representation of the day of the week
-     *	  z      9          The julian date, or day of the year (0-365)
+     *	  l      Wednesday  A full textual representation of the weekDay of the week
+     *	  S      th         English ordinal weekDay of month suffix, 2 chars (use with j)
+     *	  w      3          Numeric representation of the weekDay of the week
+     *	  z      9          The julian date, or weekDay of the year (0-365)
      *	  W      01         ISO-8601 2-digit week number of year, weeks starting on Monday (00-52)
      *	  F      January    A full textual representation of the month
      *	  m      01         Numeric representation of a month, with leading zeros
@@ -9276,7 +9276,7 @@ ORYX.Core.UIObject = {
 	},
 	
 	/**
-	 * Is called in update method, if isChanged is set to true. Sub classes should call the super class method.
+	 * Is called in update method, if isChanged is set to true. Sub aClasses should call the super class method.
 	 */
 	refresh: function() {
 		
@@ -13642,7 +13642,7 @@ ORYX.Core.Shape = {
 	 */
 
 	/**
-	 * Child classes have to overwrite this method for initializing a loaded
+	 * Child aClasses have to overwrite this method for initializing a loaded
 	 * SVG representation.
 	 * @param {SVGDocument} svgDocument
 	 */

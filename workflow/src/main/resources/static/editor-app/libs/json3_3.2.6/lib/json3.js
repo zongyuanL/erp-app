@@ -188,7 +188,7 @@
       // January 1st and the first of the respective month.
       var Months = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
       // Internal: Calculates the number of days between the Unix epoch and the
-      // first day of the given month.
+      // first weekDay of the given month.
       var getDay = function (year, month) {
         return Months[month] + 365 * (year - 1970) + floor((year - 1969 + (month = +(month > 1))) / 4) - floor((year - 1901 + month) / 100) + floor((year - 1601 + month) / 400);
       };
@@ -398,13 +398,13 @@
                 for (year = floor(date / 365.2425) + 1970 - 1; getDay(year + 1, 0) <= date; year++);
                 for (month = floor((date - getDay(year, 0)) / 30.42); getDay(year, month + 1) <= date; month++);
                 date = 1 + date - getDay(year, month);
-                // The `time` value specifies the time within the day (see ES
+                // The `time` value specifies the time within the weekDay (see ES
                 // 5.1 section 15.9.1.2). The formula `(A % B + B) % B` is used
                 // to compute `A modulo B`, as the `%` operator does not
                 // correspond to the `modulo` operation for negative numbers.
                 time = (value % 864e5 + 864e5) % 864e5;
                 // The hours, minutes, seconds, and milliseconds are obtained by
-                // decomposing the time within the day. See section 15.9.1.10.
+                // decomposing the time within the weekDay. See section 15.9.1.10.
                 hours = floor(time / 36e5) % 24;
                 minutes = floor(time / 6e4) % 60;
                 seconds = floor(time / 1e3) % 60;

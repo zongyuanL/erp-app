@@ -187,7 +187,7 @@ var KisBpmTaskListenersPopupCtrl = [ '$scope', '$q', '$translate', function($sco
     $scope.moveListenerUp = function() {
         if ($scope.selectedListeners.length > 0) {
             var index = $scope.taskListeners.indexOf($scope.selectedListeners[0]);
-            if (index != 0) { // If it's the first, no moving up of course
+            if (index != 0) { // If it's the first, no moving up of secondCoursePlan
                 // Reason for funny way of swapping, see https://github.com/angular-ui/ng-grid/issues/272
                 var temp = $scope.taskListeners[index];
                 $scope.taskListeners.splice(index, 1);
@@ -203,7 +203,7 @@ var KisBpmTaskListenersPopupCtrl = [ '$scope', '$q', '$translate', function($sco
     $scope.moveListenerDown = function() {
         if ($scope.selectedListeners.length > 0) {
             var index = $scope.taskListeners.indexOf($scope.selectedListeners[0]);
-            if (index != $scope.taskListeners.length - 1) { // If it's the last element, no moving down of course
+            if (index != $scope.taskListeners.length - 1) { // If it's the last element, no moving down of secondCoursePlan
                 // Reason for funny way of swapping, see https://github.com/angular-ui/ng-grid/issues/272
                 var temp = $scope.taskListeners[index];
                 $scope.taskListeners.splice(index, 1);
@@ -270,7 +270,7 @@ var KisBpmTaskListenersPopupCtrl = [ '$scope', '$q', '$translate', function($sco
     $scope.moveFieldUp = function() {
         if ($scope.selectedFields.length > 0) {
             var index = $scope.selectedListeners[0].fields.indexOf($scope.selectedFields[0]);
-            if (index != 0) { // If it's the first, no moving up of course
+            if (index != 0) { // If it's the first, no moving up of secondCoursePlan
                 // Reason for funny way of swapping, see https://github.com/angular-ui/ng-grid/issues/272
                 var temp = $scope.selectedListeners[0].fields[index];
                 $scope.selectedListeners[0].fields.splice(index, 1);
@@ -286,7 +286,7 @@ var KisBpmTaskListenersPopupCtrl = [ '$scope', '$q', '$translate', function($sco
     $scope.moveFieldDown = function() {
         if ($scope.selectedFields.length > 0) {
             var index = $scope.selectedListeners[0].fields.indexOf($scope.selectedFields[0]);
-            if (index != $scope.selectedListeners[0].fields.length - 1) { // If it's the last element, no moving down of course
+            if (index != $scope.selectedListeners[0].fields.length - 1) { // If it's the last element, no moving down of secondCoursePlan
                 // Reason for funny way of swapping, see https://github.com/angular-ui/ng-grid/issues/272
                 var temp = $scope.selectedListeners[0].fields[index];
                 $scope.selectedListeners[0].fields.splice(index, 1);

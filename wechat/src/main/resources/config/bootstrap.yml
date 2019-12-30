@@ -1,0 +1,59 @@
+spring:
+  profiles:
+    active: dev
+
+---
+server:
+  port: 9020
+  servlet:
+    context-path: /
+spring:
+  profiles: dev
+  cloud:
+    config:
+      name: wechat,basicConfig,dbconfig  #文件前缀名称
+#      uri: http://localhost:8088
+      username: alex
+      password: 123456
+      discovery:
+        enabled: true
+        service-id: config-server
+      label: dev
+
+
+---
+server:
+  port: 9020
+  servlet:
+    context-path: /
+spring:
+  profiles: ci
+  cloud:
+    config:
+      name: wechat,basicConfig,dbconfig  #文件前缀名称
+#      uri: http://localhost:8088
+      username: alex
+      password: 123456
+      discovery:
+        enabled: true
+        service-id: config-server
+      label: ci
+
+---
+server:
+  port: 9020
+  servlet:
+    context-path: /
+spring:
+  profiles: prd
+  cloud:
+    config:
+      name: wechat,basicConfig,dbconfig  #文件前缀名称
+#      uri: http://localhost:8088
+      username: alex
+      password: 123456
+      discovery:
+        enabled: true
+        service-id: config-server
+      label: prd
+
