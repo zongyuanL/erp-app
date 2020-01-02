@@ -18,4 +18,12 @@ public class Teacher  extends EducationResource{
     private List<CoursePlan> teachingCoursePlan;
 
     private List<SpecialityClasses> teachingClass;
+
+
+
+    @Override
+    public boolean equals(Object o){
+        Teacher t = (Teacher)o;
+        return this.getId()==((Teacher) o).getId();
+    }
 }

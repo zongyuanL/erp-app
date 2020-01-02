@@ -21,5 +21,6 @@ public class Course {
     private List<Teacher> fittedTeachers;
     private List<ClassRoom> fittedClassRooms;
     private List<Segment> fittedSegments;
+    private List<Teacher> fittedAssistant;
 
 }

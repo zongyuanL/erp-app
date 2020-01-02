@@ -1,8 +1,11 @@
 package com.alex.erp.lesson.entity;
 
 import lombok.Data;
+import lombok.Generated;
 
+import java.io.Serializable;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @version 0.0.1
@@ -11,21 +14,24 @@ import java.util.List;
  * @Date 2019-10-13 1:26 PM
  */
 @Data
-public class Lesson implements Cloneable {
+public class Lesson implements Cloneable,Serializable {
 
+    private String id = UUID.randomUUID().toString();
     private CoursePlan coursePlan;
     private List<Students> students;
     private ClassRoom classRoom;
     private Segment segment;
     private Teacher teacher;
-
+    private List<Teacher> assistant;
     private Enum cycleType;
-
-
 
     private int classRoomType;
     private int segmentType;
     private int teacherType;
+
+    public Lesson(){
+
+    }
 
     public Lesson(CoursePlan coursePlan, Segment segment, ClassRoom classRoom, Teacher teacher,List<Students> students, Enum cycleType) {
         this.coursePlan = coursePlan;
@@ -37,13 +43,12 @@ public class Lesson implements Cloneable {
     }
 
 
-//    @Override
-//    protected Object clone() throws CloneNotSupportedException {
-//        Lesson lesson = (Lesson) super.clone();
-//        lesson.coursePlan = coursePlan.cl
-//        p.address = (Address) address.clone();
-//        return p;
-//    }
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        Lesson lesson = (Lesson) super.clone();
+        lesson.segment =(Segment) segment.clone();
+        return lesson;
+    }
 
 
 }

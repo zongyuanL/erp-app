@@ -19,6 +19,8 @@ public class EducationResource extends Condition implements Cloneable{
 
     private List<Segment> fitnessSegment;
 
+    private List<Lesson> arrangedLessons;
+
     public List<Segment> getAvaliableSegment(){
         List<? extends Condition> requiredList = ArrangeUtils.getFitnessList(this.fitnessSegment,CourseEnum.REQUIRED.getCode());
         if(requiredList.size()==0){

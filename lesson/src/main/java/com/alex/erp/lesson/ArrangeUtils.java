@@ -20,39 +20,157 @@ public class ArrangeUtils {
         generateWeekSegment();
     }
 
-    public static List<CoursePlan> getConflictCourse(List<Lesson> lessons) {
-
-        List<CoursePlan> conflictList = new ArrayList<>();
-
-        try {
-
-            Class clz = Lesson.class;
-
-            //同一个教师在同一个时间有两节课
-            Method method = clz.getMethod("getTeacher");
-            List<CoursePlan> teacherConflict = getConflictCourses(lessons, method);
-
-            //同一个教室在同一个时间有两节课
-            method = clz.getMethod("getClassRoom");
-            List<CoursePlan> classRoomConflict = getConflictCourses(lessons, method);
-
-            //同一个专业方向在同一个时间有两节课
-            method = clz.getMethod("getSpecialityClasses");
-
-            List<CoursePlan> classConflict = getConflictCourses(lessons, method);
-
-            conflictList.addAll(classRoomConflict);
-            conflictList.addAll(teacherConflict);
-            conflictList.addAll(classConflict);
+    public static List<LessonConflict> validateHardCondition(List<Lesson> lessons) {
+        List<LessonConflict> lessonConflict = new ArrayList<>();
+        lessonConflict.addAll(validateClassroom(lessons));
+        lessonConflict.addAll(validateTeacher(lessons));
+        lessonConflict.addAll(validateStudents(lessons));
 
 
-        } catch (Exception e) {
+        return lessonConflict;
 
-        }
+    }
+    public static List<LessonConflict> validateSoftCondition(List<Lesson> lessons) {
+        List<LessonConflict> lessonConflict = new ArrayList<>();
+        lessonConflict.addAll(validateClassroom(lessons));
+        lessonConflict.addAll(validateTeacher(lessons));
+        lessonConflict.addAll(validateStudents(lessons));
 
-        return CommonUtils.listRemoveDuplicate(conflictList);
+
+        return lessonConflict;
+
     }
 
+    private static List<LessonConflict> validateClassroom(List<Lesson> lessons){
+        List<LessonConflict> lessonConflict = new ArrayList<>();
+                lessons.parallelStream()
+                .filter(o -> !(o.getClassRoom() instanceof NativeClassRoom))
+                        .collect(Collectors.groupingBy(o -> o.getSegment().toString()+Constant.JOIN_STRING+o.getClassRoom().getId()))
+                .entrySet().parallelStream().forEach(x->{
+                    List<Lesson> lessonList =  x.getValue();
+                    if(x.getValue().size()>1){
+                        LessonConflict conflict = new LessonConflict();
+                        conflict.setConflictSegment(lessonList.get(0).getSegment());
+                        lessonList.parallelStream().forEach(o->conflict.getConflictResources().add(o.getClassRoom()));
+                        lessonConflict.add(conflict);
+                    }
+                });
+        return lessonConflict;
+    }
+
+
+    private static List<LessonConflict> validateTeacher(List<Lesson> lessons){
+
+
+        List<Lesson> lessonList =  new ArrayList<>();
+        lessonList.addAll(lessons);
+        List<Lesson> assistantLessons = lessons.parallelStream().filter(o->o.getAssistant()!=null).collect(Collectors.toList());
+        if(assistantLessons.size()!=0){
+            assistantLessons.parallelStream().forEach(o->{
+                Segment segment = o.getSegment();
+                o.getAssistant().parallelStream().forEach(x->{
+                    Lesson lesson = new Lesson();
+                    lesson.setSegment(segment);
+                    lesson.setTeacher(x);
+                    lessonList.add(lesson);
+                });
+            });
+        }
+
+
+        List<LessonConflict> lessonConflict = new ArrayList<>();
+        lessons.parallelStream()
+                .collect(Collectors.groupingBy(o -> o.getSegment().toString()+Constant.JOIN_STRING+o.getTeacher().getId()))
+                .entrySet().parallelStream().forEach(x->{
+            List<Lesson> _lessons =  x.getValue();
+            if(_lessons.size()>1){
+                LessonConflict conflict = new LessonConflict();
+                conflict.setConflictSegment(_lessons.get(0).getSegment());
+                _lessons.parallelStream().forEach(o->conflict.getConflictResources().add(o.getTeacher()));
+                lessonConflict.add(conflict);
+            }
+        });
+        return lessonConflict;
+    }
+
+
+
+    private static List<LessonConflict> validateStudents(List<Lesson> lessons){
+
+
+        List<Lesson> lessonList =  new ArrayList<>();
+        lessonList.addAll(lessons);
+        List<Lesson> combinedLessons = lessons.parallelStream().filter(o->o.getStudents().size()>1).collect(Collectors.toList());
+        if(combinedLessons.size()!=0){
+            lessons.removeAll(combinedLessons);
+            combinedLessons.parallelStream().forEach(o->{
+
+                Segment segment = o.getSegment();
+                o.getStudents().parallelStream().forEach(x->{
+                    Lesson lesson = new Lesson();
+                    lesson.setSegment(segment);
+                    List<Students> list = new ArrayList<>();
+                    list.add(x);
+                    lesson.setStudents(list);
+                    lessonList.add(lesson);
+                });
+            });
+        }
+
+
+        List<LessonConflict> lessonConflict = new ArrayList<>();
+        lessons.parallelStream()
+                .collect(Collectors.groupingBy(o -> o.getSegment().toString()+Constant.JOIN_STRING+o.getStudents().get(0).toString()))
+                .entrySet().parallelStream().forEach(x->{
+            List<Lesson> _lessons =  x.getValue();
+            if(_lessons.size()>1){
+                LessonConflict conflict = new LessonConflict();
+                conflict.setConflictSegment(_lessons.get(0).getSegment());
+                _lessons.parallelStream().forEach(o->conflict.getConflictResources().add(o.getStudents().get(0)));
+                lessonConflict.add(conflict);
+            }
+        });
+        return lessonConflict;
+    }
+
+
+
+//    private static void validateSoftCondition(List<Lesson> lessons){
+//
+//    }
+
+//    private static void validateHardCondition(List<Lesson> lessons){
+//        List<CoursePlan> conflictList = new ArrayList<>();
+//
+//        try {
+//
+//            Class clz = Lesson.class;
+//
+//            //同一个教师在同一个时间有两节课
+//            Method method = clz.getMethod("getTeacher");
+//            List<CoursePlan> teacherConflict = getConflictCourses(lessons, method);
+//
+//            //同一个教室在同一个时间有两节课
+//            method = clz.getMethod("getClassRoom");
+//            List<CoursePlan> classRoomConflict = getConflictCourses(lessons, method);
+//
+//            //同一个专业方向在同一个时间有两节课
+//            method = clz.getMethod("getSpecialityClasses");
+//
+//            List<CoursePlan> classConflict = getConflictCourses(lessons, method);
+//
+//            conflictList.addAll(classRoomConflict);
+//            conflictList.addAll(teacherConflict);
+//            conflictList.addAll(classConflict);
+//
+//
+//        } catch (Exception e) {
+//
+//        }
+//
+////        return CommonUtils.listRemoveDuplicate(conflictList);
+//
+//    }
     private static List<CoursePlan> getConflictCourses(List<Lesson> lessons, Method method) {
         List<CoursePlan> conflictList = new ArrayList<>();
         Map<String, List<Lesson>> groupMap = lessons.stream().collect(Collectors.groupingBy(item -> getUniqueCode(item, method)));

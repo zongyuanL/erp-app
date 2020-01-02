@@ -34,6 +34,8 @@ public class Constant {
     public static String GENERATE_TYPE_SPEED = "SPEED";
     public static String GENERATE_TYPE_BEST = "BEST";
 
+    public static String ALL_SPECIALITYFIELD = "ALL_SPECIALITYFIELD";
+
     public static String TEACHER_TYPE_TEACHER="TEACHER";
     public static String TEACHER_TYPE_ASSISTANT="ASSISTANT";
     public static String TEACHER_TYPE_BOTH="BOTH";

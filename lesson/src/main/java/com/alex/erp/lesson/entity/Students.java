@@ -1,5 +1,6 @@
 package com.alex.erp.lesson.entity;
 
+import com.alex.erp.lesson.dic.Constant;
 import lombok.Data;
 
 /**
@@ -10,7 +11,7 @@ import lombok.Data;
  */
 
 @Data
-public class Students implements Cloneable{
+public class Students extends EducationResource implements Cloneable{
 
     private String classID;
     private String specialityField;
@@ -21,4 +22,16 @@ public class Students implements Cloneable{
         return super.clone();
     }
 
+    @Override
+    public boolean equals(Object o){
+        Students s = (Students) o;
+        return s.getClassID().equals(this.classID) && (s.getSpecialityField().equals(this.specialityField) ||
+            s.getSpecialityField().equals(Constant.ALL_SPECIALITYFIELD) ||
+            this.getSpecialityField().equals(Constant.ALL_SPECIALITYFIELD));
+    }
+
+    @Override
+    public String toString(){
+        return this.getClassID()+Constant.JOIN_STRING+this.getSpecialityField();
+    }
 }

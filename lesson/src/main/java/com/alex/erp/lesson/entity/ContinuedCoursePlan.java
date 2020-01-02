@@ -4,7 +4,6 @@ import com.alex.erp.lesson.utils.CommonUtils;
 import lombok.Data;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -15,21 +14,21 @@ import java.util.List;
  */
 @Data
 public class ContinuedCoursePlan extends CoursePlan {
-    private List<CoursePlan> continuedCoursePlans;
+    private List<CoursePlan> relatedCoursePlans;
 
     @Override
     public List<Lesson> generateLesson() {
         List<Lesson> list = new ArrayList<>();
         List<Segment> segments = new ArrayList<>();
-        ContinuedLesson[][] lessonArray =  new ContinuedLesson[quantity][continuedCoursePlans.size()];
+        ContinuedLesson[][] lessonArray =  new ContinuedLesson[quantity][relatedCoursePlans.size()];
 
         for (int i = 0; i < quantity; i++) {
             Segment segment = generateSegments();
             segments.add(segment);
         }
 
-        for (int j = 0; j < continuedCoursePlans.size(); j++) {
-            CoursePlan plan = continuedCoursePlans.get(j);
+        for (int j = 0; j < relatedCoursePlans.size(); j++) {
+            CoursePlan plan = relatedCoursePlans.get(j);
             Teacher teacher = plan.generateTeacher();
             ClassRoom classRoom = plan.generateClassroom();
             for (int i = 0; i < quantity; i++) {
@@ -42,7 +41,7 @@ public class ContinuedCoursePlan extends CoursePlan {
 
         for (int i = 0; i < quantity; i++) {
             ContinuedLesson[] lessons = lessonArray[i];
-            for (int j = 0; j < continuedCoursePlans.size()-1; j++) {
+            for (int j = 0; j < relatedCoursePlans.size()-1; j++) {
                 ContinuedLesson lesson = lessons[j];
                 lesson.setNextLesson(lessons[j+1]);
                 list.add(lesson);
@@ -79,8 +78,8 @@ public class ContinuedCoursePlan extends CoursePlan {
     @Override
     public void calculateAvailableSegment() {
         List<Segment> segmentList = null;
-        for (int i = 0; i < this.getContinuedCoursePlans().size(); i++) {
-            CoursePlan plan = continuedCoursePlans.get(i);
+        for (int i = 0; i < this.getRelatedCoursePlans().size(); i++) {
+            CoursePlan plan = relatedCoursePlans.get(i);
             List<Segment> _segmentList  =  plan.getAvailableSegments();
             if(null == segmentList){
                 segmentList = _segmentList;

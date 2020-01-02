@@ -17,7 +17,6 @@ public class ClassRoom extends EducationResource {
     private String address;
     private int capacity;
     private boolean state;
-    private List<CoursePlan> fitnessCours;
-
+    private List<CoursePlan> fitnessCourse;
 
 }

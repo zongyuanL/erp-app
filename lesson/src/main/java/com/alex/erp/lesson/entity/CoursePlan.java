@@ -189,7 +189,7 @@ public class CoursePlan implements Cloneable{
     }
 
 
-    protected Segment generateSegments(){
+    public Segment generateSegments(){
 
         Segment segment;
         Random random = new Random();
@@ -206,7 +206,7 @@ public class CoursePlan implements Cloneable{
     }
 
 
-    protected Teacher generateTeacher(){
+    public Teacher generateTeacher(){
 
         Teacher teacher;
         Random random = new Random();
@@ -222,8 +222,27 @@ public class CoursePlan implements Cloneable{
 
     }
 
+    public List<Teacher> generateAssistant(){
+        List<Teacher> assistants = new ArrayList<>();
+        for (int i = 0; i < this.getAssistantNum(); i++) {
+            Teacher teacher;
+            Random random = new Random();
+            List<Teacher> availableResources;
+            if(this.getFittedAssistant().size()>0){
+                availableResources =this.getFittedAssistant();
+            }else{
+                availableResources = this.getCourse().getFittedAssistant();
+            }
+            int n = random.nextInt(availableResources.size());
+            teacher = availableResources.get(n);
+            assistants.add(teacher);
+        }
+        return assistants;
 
-    protected ClassRoom generateClassroom(){
+    }
+
+
+    public ClassRoom generateClassroom(){
 
         ClassRoom classRoom;
         Random random = new Random();
@@ -238,7 +257,7 @@ public class CoursePlan implements Cloneable{
         return classRoom;
 
     }
-    
+
 
 
     public boolean  canArrangeCourse(){

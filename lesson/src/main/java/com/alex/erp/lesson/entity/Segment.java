@@ -1,5 +1,6 @@
 package com.alex.erp.lesson.entity;
 
+import com.alex.erp.lesson.dic.Constant;
 import com.alex.erp.lesson.dic.CourseEnum;
 import lombok.Data;
 
@@ -19,12 +20,19 @@ public class Segment extends Condition{
     private Enum cycleType = CourseEnum.CYCLE_TYPE_EVERY;
     private List<CoursePlan> fitnessCoursePlan;
 
-    public boolean equals(Segment s){
-       return (s.getWeekDay()==this.getWeekDay() & s.getSlot()==this.getSlot());
+    @Override
+    public boolean equals(Object s){
+        Segment segment = (Segment) s;
+        return (segment.getWeekDay()==this.getWeekDay() & segment.getSlot()==this.getSlot());
     }
 
     public Segment(int weekDay, int slot) {
         this.weekDay = weekDay;
         this.slot = slot;
+    }
+
+    @Override
+    public String toString(){
+        return this.getWeekDay() + Constant.JOIN_STRING + this.getSlot();
     }
 }

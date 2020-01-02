@@ -1,5 +1,8 @@
 package com.alex.erp.lesson.entity;
 
+import lombok.Data;
+
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -8,7 +11,11 @@ import java.util.List;
  * @Author Alex ZY Liang
  * @Date 2019-12-26 11:01 AM
  */
-public class ContinuedLesson extends Lesson {
+
+@Data
+public class ContinuedLesson extends Lesson implements Serializable {
+
+    private ContinuedCoursePlan coursePlan;
 
     private ContinuedLesson preLesson;
     private ContinuedLesson nextLesson;

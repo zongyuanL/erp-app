@@ -1,8 +1,10 @@
 package com.alex.erp.lesson.gens;
 
+import com.alex.erp.lesson.ArrangeUtils;
 import com.alex.erp.lesson.dic.Constant;
-import com.alex.erp.lesson.entity.CoursePlan;
-import com.alex.erp.lesson.entity.Lesson;
+import com.alex.erp.lesson.dic.MutationAndCrossPositionEnum;
+import com.alex.erp.lesson.entity.*;
+import com.alex.erp.lesson.utils.CommonUtils;
 import lombok.Data;
 
 import java.util.*;
@@ -25,11 +27,14 @@ public class LessonGens {
     //精英数量
     private static final int eliteNum = 8;
 
-    //
+    //变异概率
     private static final double pcl=0.7d;
     private static final double pch=0.95d;
 
+    //
     private static final String generateType=Constant.GENERATE_TYPE_BEST;
+
+    private static Random rand = new Random();
 
 
     //基因序列
@@ -84,177 +89,235 @@ public class LessonGens {
      * 将染色体转换成x,y变量的值
      */
     private Gene calculateFitnessValue(Gene gene) {
-        gene.setFitness(1);
+        List<Lesson> lessons = gene.getLessons();
+        List<LessonConflict> hardConflicts= ArrangeUtils.validateHardCondition(lessons);
+        List<LessonConflict> softConflicts= ArrangeUtils.validateSoftCondition(lessons);
+
+        gene.setFitness(hardConflicts.size());
+        gene.setSoftFitness(softConflicts.size());
         return gene;
     }
 
-
-    private void calculateFitnessValue() {
-
-        for (int j = 0; j < fitness.length; j++) {
-            fitness[j] = 100;
-        }
-
-        for (int i = 0; i < TSPDATA.SPECIES_Num; i++) {
-            for (int j = 0; j < TSPDATA.LessonNum - 1; j++) {
-
-                Lessons le = (population[i][j]);
-                Lessons lec = (population[i][j + 1]);
-                if (le.weekDay.equalsIgnoreCase(lec.weekDay) && le.course != "9") {
-                    if (le.teacher.equalsIgnoreCase(lec.teacher) || le.course.equalsIgnoreCase(lec.course) || le.classm.equalsIgnoreCase(lec.classm)) {
-                        fitness[i]--;
-
-                    }
-                }
-
-            }
-        }
+    private String fetchGroupKey(Segment segment,EducationResource resource){
+        return segment.getWeekDay()+Constant.JOIN_STRING+segment.getSlot()+Constant.JOIN_STRING+resource.getId();
     }
+
+
+
     /**
      * 轮盘选择
      * 计算群体上每个个体的适应度值;
      * 按由个体适应度值所决定的某个规则选择将进入下一代的个体;
      */
     private void select() {
-        this.elitePopulation = this.getPopulation().stream()
+        this.elitePopulation = this.getPopulation().parallelStream()
                 .map(gene-> calculateFitnessValue(gene))
-                .sorted(Comparator.comparing(Gene::getFitness))
+                .sorted(Comparator.comparing(Gene::getFitness).thenComparing(Gene::getSoftFitness))
                 .limit(LessonGens.eliteNum)
                 .collect(Collectors.toList());
+    }
+
+
+    private void reproduce(){
+        this.getPopulation().clear();
+        this.getPopulation().addAll(this.getElitePopulation());
+
+        while(this.population.size()<LessonGens.populationSize){
+
+            List<Lesson> lessons;
+            double _rate = rand.nextDouble();
+            if( LessonGens.pcl<_rate && _rate<LessonGens.pch){
+                lessons = this.cross();
+            }else{
+                lessons = this.mutation();
+            }
+            Gene gene = new Gene(lessons);
+            this.getPopulation().add(gene);
+        }
+
     }
 
     /**
      * 交叉操作 交叉率为60%，平均为60%的染色体进行交叉
      */
     private List<Lesson> cross() {
-//        String temp1, temp2;
-//        for (int i = 0; i < ChrNum; i++) {
-//            if (Math.random() < 0.60) {
-//                int pos = (int)(Math.random()*GENE)+1;     //pos位点前后二进制串交叉
-//                temp1 = ipop[i].substring(0, pos) + ipop[(i + 1) % ChrNum].substring(pos);
-//                temp2 = ipop[(i + 1) % ChrNum].substring(0, pos) + ipop[i].substring(pos);
-//                ipop[i] = temp1;
-//                ipop[(i + 1) / ChrNum] = temp2;
-//            }
-//        }
-        Random rand = new Random();
+        try{
+            List<Lesson> fatherGenes = this.getPopulation().get(rand.nextInt(LessonGens.eliteNum)).getLessons();
+            List<Lesson> motherGenes = this.getPopulation().get(rand.nextInt(LessonGens.eliteNum)).getLessons();
+            List<Lesson> childGenes = CommonUtils.deepCopyList(fatherGenes);
+            int mutatePosition = rand.nextInt(MutationAndCrossPositionEnum.values().length)+1;
+            childGenes.parallelStream().forEach(o->{
+                String _id = o.getId();
+                Lesson childGene = o;
+                motherGenes.parallelStream().filter(l->l.getId().equals(_id)).findFirst().ifPresent(
+                        t->{
+                            switch (MutationAndCrossPositionEnum.getByValue(mutatePosition)){
+                                case WEEKDAY:
+                                    childGene.getSegment().setWeekDay(t.getSegment().getWeekDay());
+                                    break;
+                                case TEACHER:
+                                    childGene.setTeacher(t.getTeacher());
+                                    break;
+                                case ASSISTANT:
+//                                    if(!(childGene.getClassRoom() instanceof NativeClassRoom)){
+//                                        childGene.setClassRoom(t.getClassRoom());
+//                                    }
 
-        for (int i = 0; i < TSPDATA.SPECIES_Num; i++)
-        {
-            float rate = (float)rand.nextDouble();
-            for (int j = 0; j < TSPDATA.LessonNum-1; j++)
-            {
-                if (rate > TSPDATA.pcl && rate < TSPDATA.pch)
-                {
-//string str = population[i+1, j];
-                    Lessons le1 = population[i][j];
-                    Lessons le2 = population[i][ j+1];
-                    if (le1.weekDay != "-1" && le2.weekDay != "-1")
-                    {
-                        String s, k, g;
-                        s = le1.teacher;
-                        k = le1.course;
-                        g = le1.classm;
-                        le1.teacher = le2.teacher;
-                        le1.course = le2.course;
-                        le1.classm = le2.classm;
-                        le2.classm = g;
-                        le2.course = k;
-                        le2.teacher = s;
-                        population[i][j] = le1;
-                        population[i][ j + 1] = le2;
-                    }
-                }
-            }
+                                    childGene.setAssistant(t.getAssistant());
+                                    break;
+                                case CLASSROOM:
+                                    childGene.setClassRoom(t.getClassRoom());
+                                    break;
+                                case SLOT:
+                                    childGene.getSegment().setSlot(t.getSegment().getSlot());
+                                default:
+                                    break;
+                            }
+                        }
+                );
+            });
+            return childGenes;
+        }catch (Exception e){
+
         }
         return null;
     }
 
     /**
-     * 基因突变操作 1%基因变异
+     * 基因突变操作 基因变异
      */
     private List<Lesson> mutation() {
 
-
-        Random rand = new Random();
-        float rate = (float)rand.nextDouble();
-        for (int i = 0; i < TSPDATA.SPECIES_Num; i++)
-        {
-            for (int j = 0; j < TSPDATA.LessonNum - 1; j++)
-            {
-                if (rate < TSPDATA.pm)
-                {
-
-                    Lessons l1 = population[i][j];
-                    l1.teacher = TSPDATA.Teacher[rand.nextInt(TSPDATA.Teacher.length)];
-                    l1.course = TSPDATA.Course[rand.nextInt(TSPDATA.Course.length)];
-                    l1.classm = TSPDATA.Classm[rand.nextInt(TSPDATA.Classm.length)];
-                    population[i][j] = l1;
+        try{
+            List<Lesson> fatherGene = this.getPopulation().get(rand.nextInt(LessonGens.eliteNum)).getLessons();
+            List<Lesson> childGene = CommonUtils.deepCopyList(fatherGene);
+            childGene.stream().forEach(o->{
+                int mutatePosition = rand.nextInt(MutationAndCrossPositionEnum.values().length)+1;
+                CoursePlan coursePlan = o.getCoursePlan();
+                switch (MutationAndCrossPositionEnum.getByValue(mutatePosition)){
+                    case WEEKDAY:
+                        mutation_changeWeekDay(o);
+                        break;
+                    case TEACHER:
+                        Teacher teacher = o.getCoursePlan().generateTeacher();
+                        childGene.parallelStream().filter(l->l.getCoursePlan().equals(coursePlan)).forEach(l->l.setTeacher(teacher));
+                        break;
+                    case ASSISTANT:
+                        List<Teacher> assistants = o.getCoursePlan().generateAssistant();
+                        childGene.parallelStream().filter(l->l.getCoursePlan().equals(coursePlan)).forEach(l->l.setAssistant(assistants));
+                        break;
+                    case CLASSROOM:
+                        o.setClassRoom(o.getCoursePlan().generateClassroom());
+                        break;
+                    case SLOT:
+                        mutation_changeSlot(o);
+                        break;
+                    default:
+                        break;
                 }
-            }
-        }
+            });
+            return childGene;
 
-//        for (int i = 0; i < 4; i++) {
-//            int num = (int) (Math.random() * GENE * ChrNum + 1);
-//            int chromosomeNum = (int) (num / GENE) + 1; // 染色体号
-//
-//            int mutationNum = num - (chromosomeNum - 1) * GENE; // 基因号
-//            if (mutationNum == 0)
-//                mutationNum = 1;
-//            chromosomeNum = chromosomeNum - 1;
-//            if (chromosomeNum >= ChrNum)
-//                chromosomeNum = 9;
-//            String temp;
-//            String a;   //记录变异位点变异后的编码
-//            if (ipop[chromosomeNum].charAt(mutationNum - 1) == '0') {    //当变异位点为0时
-//                a = "1";
-//            } else {
-//                a = "0";
-//            }
-//            //当变异位点在首、中段和尾时的突变情况
-//            if (mutationNum == 1) {
-//                temp = a + ipop[chromosomeNum].substring(mutationNum);
-//            } else {
-//                if (mutationNum != GENE) {
-//                    temp = ipop[chromosomeNum].substring(0, mutationNum -1) + a
-//                            + ipop[chromosomeNum].substring(mutationNum);
-//                } else {
-//                    temp = ipop[chromosomeNum].substring(0, mutationNum - 1) + a;
-//                }
-//            }
-//            //记录下变异后的染色体
-//            ipop[chromosomeNum] = temp;
-//        }
+        }catch (Exception e){
+
+        }
         return null;
     }
 
+    private void mutation_changeWeekDay(Lesson o){
+        int _weekDay =rand.nextInt(5)+1;
+        o.getSegment().setWeekDay(_weekDay);
+        if(o instanceof ContinuedLesson){
+            ContinuedLesson _c =(ContinuedLesson) o;
+            //连堂课，修改相关所有课程
+            while (_c.getPreLesson()!=null){
+                _c=_c.getPreLesson();
+                _c.getSegment().setWeekDay(_weekDay);
+            }
+            _c =(ContinuedLesson) o;
+            while (_c.getNextLesson()!=null){
+                _c=_c.getNextLesson();
+                _c.getSegment().setWeekDay(_weekDay);
+            }
+        }
+
+    }
+
+    private void mutation_changeSlot(Lesson o){
+        if(o instanceof ContinuedLesson){
+
+            while(((ContinuedLesson) o).getPreLesson()!=null){
+                o=((ContinuedLesson) o).getPreLesson();
+            }
+            ContinuedCoursePlan continuedCoursePlan = ((ContinuedLesson) o).getCoursePlan();
+            int _slot = rand.nextInt(Constant.MAX_SOLT-continuedCoursePlan.getRelatedCoursePlans().size()+1)+1;
+            do{
+                o.getSegment().setSlot(_slot);
+                _slot++;
+                o=((ContinuedLesson) o).getNextLesson();
+            } while(o!=null);
+        }else{
+
+            o.getSegment().setSlot(rand.nextInt(Constant.MAX_SOLT)+1);
+        }
+    }
+
     public static void main(String args[]) {
-
-
-        LessonGens tryer = new LessonGens();
-        tryer.initPop(); //产生初始种群
+        LessonGens gens = new LessonGens();
+        gens.initPop(); //产生初始种群
 
         //迭代次数
         for (int i = 0; i < LessonGens.generationTimes; i++) {
-            tryer.select();
+            gens.select();
             if(Constant.GENERATE_TYPE_SPEED.equalsIgnoreCase(LessonGens.generateType) &&
-                    tryer.getElitePopulation().get(0).getFitness()==0){
+                    gens.getElitePopulation().get(0).getFitness()==0){
                 break;
             }
-            while(tryer.population.size()<LessonGens.populationSize){
-
-                Random rand = new Random();
-                List<Lesson> lessons;
-                double _rate = rand.nextDouble();
-                if( LessonGens.pcl<_rate && _rate<LessonGens.pch){
-                    lessons = tryer.cross();
-                }else{
-                    lessons = tryer.mutation();
-                }
-                Gene gene = new Gene(lessons);
-                tryer.getPopulation().add(gene);
-            }
+            gens.reproduce();
         }
+
+//            List<Lesson> list = LessonGens.mockData();
+////            Map<String,List<Lesson>> map =
+//        IntSummaryStatistics stats = list.parallelStream().collect(Collectors.groupingBy(o->o.getTeacher()))
+//            .entrySet().stream().filter(x->x.getValue().size()>1).mapToInt(x->x.getValue().size()).summaryStatistics();
+//        System.out.println(stats.getCount());
+//        System.out.println(stats.getSum());
+////                    .forEach(o->System.out.println(o.getValue().size()))
+////            .entrySet().stream().forEach(o->System.out.println(o.getValue().size()))
+// ;
+//        System.out.println("end");
+
+
+    }
+
+
+    private static List<Lesson> mockData(){
+        Lesson l1 = new Lesson(); Teacher t1 = new Teacher(); t1.setId("1"); l1.setTeacher(t1);
+        Lesson l2 = new Lesson(); Teacher t2 = new Teacher(); t2.setId("2"); l2.setTeacher(t2);
+        Lesson l3 = new Lesson(); Teacher t3 = new Teacher(); t3.setId("2"); l3.setTeacher(t3);
+        Lesson l4 = new Lesson(); Teacher t4 = new Teacher(); t4.setId("3"); l4.setTeacher(t4);
+        Lesson l5 = new Lesson(); Teacher t5 = new Teacher(); t5.setId("3"); l5.setTeacher(t5);
+        Lesson l6 = new Lesson(); Teacher t6 = new Teacher(); t6.setId("3"); l6.setTeacher(t6);
+        Lesson l7 = new Lesson(); Teacher t7 = new Teacher(); t7.setId("4"); l7.setTeacher(t7);
+        Lesson l8 = new Lesson(); Teacher t8 = new Teacher(); t8.setId("4"); l8.setTeacher(t8);
+        Lesson l9 = new Lesson(); Teacher t9 = new Teacher(); t9.setId("4"); l9.setTeacher(t9);
+        Lesson l10 = new Lesson(); Teacher t10= new Teacher(); t10.setId("4"); l10.setTeacher(t10);
+        Lesson l11 = new Lesson(); Teacher t11= new Teacher(); t11.setId("5"); l11.setTeacher(t11);
+
+        List<Lesson> lessons = new ArrayList<>();
+        lessons.add(l1);
+        lessons.add(l2);
+        lessons.add(l3);
+        lessons.add(l4);
+        lessons.add(l5);
+        lessons.add(l6);
+        lessons.add(l7);
+        lessons.add(l8);
+        lessons.add(l9);
+        lessons.add(l10);
+        lessons.add(l11);
+
+        return lessons;
     }
 }
 
